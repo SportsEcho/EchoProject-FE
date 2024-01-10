@@ -1,6 +1,8 @@
 import React from 'react';
+import '../../assets/styles/index.css';
 
 function Navigation() {
+  console.log("Rendering Navigation");
   return (
       <nav>
         <ul>
