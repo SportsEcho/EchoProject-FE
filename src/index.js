@@ -1,10 +1,11 @@
-import './assets/styles/your-style-sheet.css';
+import './assets/styles/index.css';
+import $ from 'jquery';
+import ReactDOM from "react-dom/client";
+import React from 'react';
+import App from './App';
 
-
-
-
-// API 키와 호스트는 변수로 저장하여 재사용
-const apiKey = process.env.API_KEY;
+//API 키와 호스트는 변수로 저장하여 재사용
+const apiKey = process.env.REACT_APP_API_KEY;
 const apiHostFootball = 'api-football-v1.p.rapidapi.com';
 const apiHostBasketball = 'api-basketball.p.rapidapi.com';
 const apiHostBaseball = 'api-baseball.p.rapidapi.com';
@@ -34,7 +35,7 @@ function fetchGames(sportType) {
     url: apiUrl,
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': process.env.API_KEY,
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
       'X-RapidAPI-Host': apiHost
     }
   }).done(function(response) {
@@ -42,6 +43,12 @@ function fetchGames(sportType) {
     console.log(response);
   });
 }
-
 // 예시: 축구 경기 정보 가져오기
 fetchGames('football');
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    // <React.StrictMode>
+    <App />,
+    // </React.StrictMode>,
+);
