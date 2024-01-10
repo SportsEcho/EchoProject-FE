@@ -1,3 +1,8 @@
+import './assets/styles/your-style-sheet.css';
+
+
+
+
 // API 키와 호스트는 변수로 저장하여 재사용
 const apiKey = process.env.API_KEY;
 const apiHostFootball = 'api-football-v1.p.rapidapi.com';
