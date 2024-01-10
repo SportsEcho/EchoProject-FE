@@ -1,9 +1,11 @@
 import React from 'react';
-import logo from '../assets/images/EchoLogo.jpeg';
-import shoppingCart from '../assets/images/shopping-cart.png';
-import userImage from '../assets/images/IMG_1851.JPG';
+import logo from '../../assets/images/EchoLogo.jpeg';
+import shoppingCart from '../../assets/images/shopping-cart.png';
+import userImage from '../../assets/images/IMG_1851.JPG';
+import '../../assets/styles/index.css';
 
 function Header() {
+  console.log("Rendering Header");
   return (
       <header>
         <div id="logo">
