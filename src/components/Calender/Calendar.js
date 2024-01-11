@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function Calendar() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    fetchFootballGames(date.toISOString().split('T')[0]); // YYYY-MM-DD 형식으로 전달
-  };
-
+function Calendar({ onDateChange }) {
   return (
-      <div>
-        <DatePicker selected={selectedDate} onChange={handleDateChange} />
-      </div>
+      <DatePicker
+          selected={new Date()}
+          onChange={(date) => onDateChange(date)}
+      />
   );
 }
+
+export default Calendar;
