@@ -1,7 +1,7 @@
 
 const fetchFootballGames = async (date) => {
   try {
-    const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=2021`, {
+    const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=${year}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
@@ -22,7 +22,7 @@ const fetchFootballGames = async (date) => {
 };
 const fetchBasketballGames = async (date) => {
   try {
-    const response = await fetch(`https://api-basketball.p.rapidapi.com/games?date=${date}&league=12&season=2021`, {
+    const response = await fetch(`https://api-basketball.p.rapidapi.com/games?date=${date}&league=12&season=${year}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
@@ -43,7 +43,7 @@ const fetchBasketballGames = async (date) => {
 };
 const fetchBaseballGames = async (date) => {
   try {
-    const response = await fetch(`https://api-baseball.p.rapidapi.com/games?date=${date}&league=1&season=2021`, {
+    const response = await fetch(`https://api-baseball.p.rapidapi.com/games?date=${date}&league=1&season=${year}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
