@@ -3,20 +3,29 @@ import { fetchFootballGames } from '../../api/gameApi';
 
 function FootballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
         const footballData = await fetchFootballGames(selectedDate);
-        setGames(footballData);
+        if (footballData && footballData.length > 0) {
+          setGames(footballData);
+          setError('');
+        } else {
+          setError('해당 날짜에 축구 경기가 없습니다.');
+        }
       } catch (error) {
-        console.error('Error fetching football data:', error);
+        setError('축구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
 
     fetchGames();
   }, [selectedDate]);
 
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
       <div>
         <h2>축구 경기 일정</h2>
