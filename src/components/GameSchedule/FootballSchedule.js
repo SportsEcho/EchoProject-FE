@@ -1,6 +1,5 @@
-// FootballSchedule.js
 import React, { useState, useEffect } from 'react';
-import { fetchFootballGames } from '../../api/gameApi'; // 이 함수는 API 호출을 담당합니다.
+import { fetchFootballGames } from '../../api/gameApi';
 
 function FootballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
@@ -9,7 +8,7 @@ function FootballSchedule({ selectedDate }) {
     const fetchGames = async () => {
       try {
         const footballData = await fetchFootballGames(selectedDate);
-        setGames(footballData); // API에서 가져온 경기 정보를 상태로 저장
+        setGames(footballData);
       } catch (error) {
         console.error('Error fetching football data:', error);
       }
