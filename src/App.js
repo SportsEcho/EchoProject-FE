@@ -15,11 +15,10 @@ function App() {
       <div>
         <Header />
         <Navigation />
-        <Calendar onDateChange={setSelectedDate} />
-        <FootballSchedule footballGames={footballGames} />
-        <BasketballSchedule basketballGames={basketballGames} />
-        <BaseballSchedule baseballGames={baseballGames} />
-
+        <Calendar selectedDate={selectedDate} onDateChange={(date) => setSelectedDate(date)} />
+        <FootballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
+        <BasketballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
+        <BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
         <Footer />
       </div>
   );
