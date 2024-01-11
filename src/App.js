@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
 import Footer from './components/Footer/Footer';
-import Calendar from './components/Calendar';
+import Calendar from './components/Calender/Calendar';
 import './assets/styles/index.css';
 
 function App() {
