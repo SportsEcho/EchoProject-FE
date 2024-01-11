@@ -1,5 +1,6 @@
 
 const fetchFootballGames = async (date) => {
+  const year = new Date(date).getFullYear(); // 연도 추출
   try {
     const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=${year}`, {
       method: 'GET',
@@ -14,13 +15,14 @@ const fetchFootballGames = async (date) => {
     }
 
     const data = await response.json();
-    console.log('Football Data:', data);
-    // 여기에서 경기 일정 데이터 처리
+    return data.response; // 경기 정보 반환
   } catch (error) {
     console.error('Error fetching football data:', error);
   }
 };
+
 const fetchBasketballGames = async (date) => {
+  const year = new Date(date).getFullYear(); // 연도 추출
   try {
     const response = await fetch(`https://api-basketball.p.rapidapi.com/games?date=${date}&league=12&season=${year}`, {
       method: 'GET',
@@ -35,13 +37,14 @@ const fetchBasketballGames = async (date) => {
     }
 
     const data = await response.json();
-    console.log('Basketball Data:', data);
-    // 여기에서 경기 일정 데이터 처리
+    return data.response; // 경기 정보 반환
   } catch (error) {
     console.error('Error fetching basketball data:', error);
   }
 };
+
 const fetchBaseballGames = async (date) => {
+  const year = new Date(date).getFullYear(); // 연도 추출
   try {
     const response = await fetch(`https://api-baseball.p.rapidapi.com/games?date=${date}&league=1&season=${year}`, {
       method: 'GET',
@@ -56,8 +59,7 @@ const fetchBaseballGames = async (date) => {
     }
 
     const data = await response.json();
-    console.log('Baseball Data:', data);
-    // 여기에서 경기 일정 데이터 처리
+    return data.response; // 경기 정보 반환
   } catch (error) {
     console.error('Error fetching baseball data:', error);
   }
