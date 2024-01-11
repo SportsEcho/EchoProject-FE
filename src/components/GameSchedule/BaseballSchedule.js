@@ -3,20 +3,29 @@ import { fetchBaseballGames } from '../../api/gameApi'; // 이 함수는 API 호
 
 function BaseballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // 야구 경기 정보 불러오기
     const fetchGames = async () => {
       try {
         const data = await fetchBaseballGames(selectedDate);
-        setGames(data.response); // API 응답 구조에 따라 수정 필요
+        if (data && data.length > 0) {
+          setGames(data);
+          setError('');
+        } else {
+          setError('해당 날짜에 야구 경기가 없습니다.');
+        }
       } catch (error) {
-        console.error('Error fetching baseball data:', error);
+        setError('야구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
 
     fetchGames();
   }, [selectedDate]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   // API 응답으로부터 경기 정보를 표로 표시합니다.
   return (
