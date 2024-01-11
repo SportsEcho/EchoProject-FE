@@ -1,7 +1,18 @@
 export const fetchFootballGames = async (date) => {
   const year = new Date(date).getFullYear();
+  let season;
+
+  if (year === 2024) {
+    // 2024년일 경우 -를 사용하여 시즌 설정
+    season = `${year - 1}`;
+  } else if (year === 2023) {
+    // 2023년일 경우 +를 사용하여 시즌 설정
+    season = `${year}`;
+  }
+
+
   try {
-    const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=${year}`, {
+    const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=${season}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
@@ -23,8 +34,18 @@ export const fetchFootballGames = async (date) => {
 
 export const fetchBasketballGames = async (date) => {
   const year = new Date(date).getFullYear();
+  let season;
+
+  if (year === 2024) {
+    // 2024년일 경우 -를 사용하여 시즌 설정
+    season = `${year - 1}-${year}`;
+  } else if (year === 2023) {
+    // 2023년일 경우 +를 사용하여 시즌 설정
+    season = `${year}-${year + 1}`;
+  }
+
   try {
-    const response = await fetch(`https://api-basketball.p.rapidapi.com/games?date=${date}&league=12&season=${year}`, {
+    const response = await fetch(`https://api-basketball.p.rapidapi.com/games?season=${season}&league=12&date=${date}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
@@ -40,14 +61,14 @@ export const fetchBasketballGames = async (date) => {
     console.log('Response data:', data); // 응답 데이터 로그
     return data.response; // 경기 정보 반환
   } catch (error) {
-    console.error('Error fetching football data:', error);
+    console.error('Error fetching basketball data:', error);
   }
 };
 
 export const fetchBaseballGames = async (date) => {
   const year = new Date(date).getFullYear();
   try {
-    const response = await fetch(`https://api-baseball.p.rapidapi.com/games?date=${date}&league=1&season=${year}`, {
+    const response = await fetch(`https://api-baseball.p.rapidapi.com/games?season=${year}&league=1&date=${date}&`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
@@ -63,6 +84,6 @@ export const fetchBaseballGames = async (date) => {
     console.log('Response data:', data); // 응답 데이터 로그
     return data.response; // 경기 정보 반환
   } catch (error) {
-    console.error('Error fetching football data:', error);
+    console.error('Error fetching baseball data:', error);
   }
 };
