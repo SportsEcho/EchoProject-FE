@@ -7,6 +7,7 @@ function Calendar({ onDateChange }) {
       <DatePicker
           selected={new Date()}
           onChange={(date) => onDateChange(date)}
+          dateFormat="yyyy-MM-dd"
       />
   );
 }
