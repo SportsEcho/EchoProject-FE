@@ -6,13 +6,10 @@ function FootballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    // 축구 경기 정보 불러오기
     const fetchGames = async () => {
       try {
-        const data = await fetchFootballGames(selectedDate);
-        // EPL 리그(ID: 39)의 경기만 필터링
-        const eplGames = data.response.filter((game) => game.league.id === 39);
-        setGames(eplGames); // API 응답 구조에 따라 수정 필요
+        const footballData = await fetchFootballGames(selectedDate);
+        setGames(footballData); // API에서 가져온 경기 정보를 상태로 저장
       } catch (error) {
         console.error('Error fetching football data:', error);
       }
@@ -21,7 +18,6 @@ function FootballSchedule({ selectedDate }) {
     fetchGames();
   }, [selectedDate]);
 
-  // API 응답으로부터 경기 정보를 표로 표시합니다.
   return (
       <div>
         <h2>축구 경기 일정</h2>
@@ -37,7 +33,7 @@ function FootballSchedule({ selectedDate }) {
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { fixture, teams, goals, score } = game;
+            const { fixture, teams, goals } = game;
             const matchTime = new Date(fixture.date).toLocaleTimeString();
             return (
                 <tr key={index}>
