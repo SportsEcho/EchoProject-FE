@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchBasketballGames } from '../../api/gameApi'; // 이 함수는 API 호출을 담당합니다.
-
+import '../../assets/styles/BasketballSchedule.css';
 function BasketballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -48,20 +48,22 @@ function BasketballSchedule({ selectedDate }) {
             return (
                 <tr key={index}>
                   <td>{matchTime}</td>
-                  <td>
-                    <img src={teams.home.logo} alt={teams.home.name} />
-                    {teams.home.name}
+                  <td className="team-cell">
+                    <img src={teams.home.logo} alt={teams.home.name} className="team-logo" />
+                    <span className="team-name">{teams.home.name}</span>
                   </td>
-                  <td>{scores.home.total} : {scores.away.total}</td>
-                  <td>
-                    <img src={teams.away.logo} alt={teams.away.name} />
-                    {teams.away.name}
+                  <td className="score">{scores.home.total} : {scores.away.total}</td>
+                  <td className="team-cell">
+                    <img src={teams.away.logo} alt={teams.away.name} className="team-logo" />
+                    <span className="team-name">{teams.away.name}</span>
                   </td>
                   <td>
-                    {scores.home.quarter_1} : {scores.away.quarter_1},
-                    {scores.home.quarter_2} : {scores.away.quarter_2},
-                    {scores.home.quarter_3} : {scores.away.quarter_3},
-                    {scores.home.quarter_4} : {scores.away.quarter_4}
+                    <div className="quarter-scores-container">
+                      <div className="quarter-score">Q1: {scores.home.quarter_1} : {scores.away.quarter_1}</div>
+                      <div className="quarter-score">Q2: {scores.home.quarter_2} : {scores.away.quarter_2}</div>
+                      <div className="quarter-score">Q3: {scores.home.quarter_3} : {scores.away.quarter_3}</div>
+                      <div className="quarter-score">Q4: {scores.home.quarter_4} : {scores.away.quarter_4}</div>
+                    </div>
                   </td>
                 </tr>
             );
