@@ -14,7 +14,8 @@ export const fetchFootballGames = async (date) => {
     }
 
     const data = await response.json();
-    return data.response;
+    console.log('Response data:', data); // 응답 데이터 로그
+    return data.response; // 경기 정보 반환
   } catch (error) {
     console.error('Error fetching football data:', error);
   }
@@ -36,9 +37,10 @@ export const fetchBasketballGames = async (date) => {
     }
 
     const data = await response.json();
-    return data.response;
+    console.log('Response data:', data); // 응답 데이터 로그
+    return data.response; // 경기 정보 반환
   } catch (error) {
-    console.error('Error fetching basketball data:', error);
+    console.error('Error fetching football data:', error);
   }
 };
 
@@ -58,8 +60,9 @@ export const fetchBaseballGames = async (date) => {
     }
 
     const data = await response.json();
-    return data.response;
+    console.log('Response data:', data); // 응답 데이터 로그
+    return data.response; // 경기 정보 반환
   } catch (error) {
-    console.error('Error fetching baseball data:', error);
+    console.error('Error fetching football data:', error);
   }
 };
