@@ -1,0 +1,58 @@
+/* BaseballSchedule.css */
+.schedule-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse; /* 테이블의 테두리 겹침을 없앰 */
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 8px; /* 셀 패딩 */
+  border: 1px solid #ddd; /* 셀 테두리 */
+  vertical-align: middle; /* 셀의 수직 정렬을 가운데로 설정 */
+}
+
+.schedule-logo {
+  width: 50px; /* 로고 크기 조절 */
+  display: block; /* 블록 요소로 변경 */
+  margin: auto; /* 자동 마진으로 가운데 정렬 */
+}
+
+.team-name {
+  display: block; /* 새 줄에 이름 표시 */
+  margin-bottom: 5px; /* 이름과 점수 사이 여백 */
+}
+
+.inning-scores {
+  display: flex;
+  justify-content: center; /* 점수를 중앙 정렬 */
+  align-items: center;
+  flex-wrap: wrap; /* 필요시 여러 줄로 나눔 */
+}
+
+.inning-score {
+  width: 30px; /* 이닝 점수 너비 */
+  text-align: center; /* 이닝 점수 중앙 정렬 */
+}
+
+.total-score {
+  font-weight: bold; /* 총 점수 굵게 */
+}
+.team-cell {
+  display: flex; /* 플렉스박스 설정 */
+  flex-direction: column; /* 세로 방향 정렬 */
+  align-items: center; /* 가로축 중앙 정렬 */
+  justify-content: center; /* 세로축 중앙 정렬 */
+}
+
+/* 로고 이미지와 팀 이름을 감싸는 컨테이너 */
+.team-info {
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.team-logo {
+  width: 50px; /* 로고의 너비 */
+  height: auto; /* 로고의 높이를 자동으로 조절 */
+  margin-bottom: 5px; /* 로고와 이름 사이의 여백 */
+}
+
