@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchFootballGames } from '../../api/gameApi';
-
+import '../../assets/styles/FootballSchedule.css';
 function FootballSchedule({ selectedDate }) {
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -46,16 +46,16 @@ function FootballSchedule({ selectedDate }) {
             return (
                 <tr key={index}>
                   <td>{matchTime}</td>
-                  <td>
-                    <img src={teams.home.logo} alt={teams.home.name} />
-                    {teams.home.name}
+                  <td className="team-cell">
+                    <img src={teams.home.logo} alt={teams.home.name} className="schedule-logo" />
+                    <span className="team-name">{teams.home.name}</span>
                   </td>
-                  <td>{goals.home} : {goals.away}</td>
-                  <td>
-                    <img src={teams.away.logo} alt={teams.away.name} />
-                    {teams.away.name}
+                  <td className="score">{goals.home} : {goals.away}</td>
+                  <td className="team-cell">
+                    <img src={teams.away.logo} alt={teams.away.name} className="schedule-logo" />
+                    <span className="team-name">{teams.away.name}</span>
                   </td>
-                  <td>{fixture.venue.name || 'TBC'}</td>
+                  <td className="venue-name">{fixture.venue.name || 'TBC'}</td>
                 </tr>
             );
           })}
