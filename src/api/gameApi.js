@@ -1,4 +1,5 @@
 export const fetchFootballGames = async (date) => {
+  const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
   const year = new Date(date).getFullYear();
   let season;
 
@@ -15,7 +16,7 @@ export const fetchFootballGames = async (date) => {
     const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=39&season=${season}`, {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
       },
     });
@@ -33,6 +34,7 @@ export const fetchFootballGames = async (date) => {
 };
 
 export const fetchBasketballGames = async (date) => {
+  const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
   const year = new Date(date).getFullYear();
   let season;
 
@@ -48,7 +50,7 @@ export const fetchBasketballGames = async (date) => {
     const response = await fetch(`https://api-basketball.p.rapidapi.com/games?season=${season}&league=12&date=${date}`, {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com',
       },
     });
@@ -66,12 +68,13 @@ export const fetchBasketballGames = async (date) => {
 };
 
 export const fetchBaseballGames = async (date) => {
+  const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
   const year = new Date(date).getFullYear();
   try {
     const response = await fetch(`https://api-baseball.p.rapidapi.com/games?season=${year}&league=1&date=${date}&`, {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': 'd789e7aa74msh95a2867cc80a6d0p11239ajsna2c01db4ee85',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com',
       },
     });
