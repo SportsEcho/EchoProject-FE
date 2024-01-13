@@ -35,13 +35,12 @@
     </style>
 </head>
 <body class="gradient-custom">
-<section class="d-flex vh-100">
+    <section class="d-flex vh-100">
     <div class="container-fluid row justify-content-center align-content-center">
         <div class="card bg-dark" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
                 <h2 class="text-white">LOGIN</h2>
                 <p class="text-white-50 mt-2 mb-5">서비스 사용을 위해 로그인을 해주세요!</p>
-
                 <div class="icon-container">
                     <div class="mb-2">
                         <a href="https://accounts.google.com/o/oauth2/auth?client_id=642740645250-jtjcbtd8bo1l0inq29cs82e77pomt48l.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/member/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile">
@@ -56,16 +55,6 @@
                     <div class="mb-2">
                         <a href="https://kauth.kakao.com/oauth/authorize?client_id= c902a6ffaf89ac3cd4a0a95396e8b29d&redirect_uri=http://localhost:8080/api/member/kakao/callback&response_type=code">
                             <img src="/static/images/kakao원형.png" class="login-icon"/>
-                        </a>
-                    </div>
-                    <div class="mb-2">
-                        <a href="https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=http://localhost:8080/api/member/github/callback&response_type=code">
-                            <img src="/static/images/gitlogo.png" class="login-icon"/>
-                        </a>
-                    </div>
-                    <div class="mb-2">
-                        <a href="https://appleid.apple.com/auth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=http://localhost:8080/api/member/apple/callback&response_type=code">
-                            <img src="/static/images/Logo%20-%20SIWA%20-%20Logo-only%20-%20Black@2x.png" class="login-icon"/>
                         </a>
                     </div>
                 </div>
@@ -84,6 +73,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </section>
 </body>
 </html>
