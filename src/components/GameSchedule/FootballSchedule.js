@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { fetchFootballGames } from '../../api/gameApi';
 import '../../assets/styles/FootballSchedule.css';
-function FootballSchedule({ selectedDate }) {
+import Calendar from "../Calendar/Calendar";
+
+function FootballSchedule() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const footballData = await fetchFootballGames(selectedDate);
-        if (footballData && footballData.length > 0) {
-          setGames(footballData);
-          setError('');
-        } else {
-          setError('해당 날짜에 축구 경기가 없습니다.');
-        }
+        const footballData = await fetchFootballGames(selectedDate.toISOString().split('T')[0]);
+        setGames(footballData || []);
+        setError('');
       } catch (error) {
+        setGames([]); // Clear previous games
         setError('축구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
@@ -23,12 +23,12 @@ function FootballSchedule({ selectedDate }) {
     fetchGames();
   }, [selectedDate]);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
   return (
       <div>
         <h2>축구 경기 일정</h2>
+        <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
+        {error && <div>{error}</div>}
+        {games.length === 0 && !error && <div>해당 날짜에 축구 경기가 없습니다.</div>}
         <table>
           <thead>
           <tr>
