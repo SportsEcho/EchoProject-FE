@@ -30,7 +30,6 @@ function MainPage({ selectedDate, setSelectedDate }) {
   return (
       <div>
         <h1>경기 일정</h1>
-        <Calendar selectedDate={selectedDate} onDateChange={(date) => setSelectedDate(date)} />
         <FootballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
         <BasketballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
         <BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
