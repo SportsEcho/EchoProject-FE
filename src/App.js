@@ -10,6 +10,7 @@ import BaseballSchedule from './components/GameSchedule/BaseballSchedule';
 import MainPage from "./components/MainPage";
 import Login from './components/Login';
 import Signup from "./components/Signup";
+import FootballCommentsPage from './components/Comment/FootballCommentsPage';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -30,6 +31,7 @@ function App() {
             <Route path="/baseball" element={<BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/comments/football" element={<FootballCommentsPage />} />
           </Routes>
           <Footer />
         </div>

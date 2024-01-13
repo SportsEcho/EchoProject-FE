@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchBaseballGames } from '../../api/gameApi';
 import Calendar from '../Calendar/Calendar';
-
+import '../../assets/styles/BaseballSchedule.css';
 function BaseballSchedule() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
