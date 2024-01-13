@@ -10,7 +10,7 @@ function Navigation({ selectedDate, onDateChange }) {
       <nav>
         <ul>
           <li>
-            <Link to="/">메인 페이지</Link>
+            <Link to="/">오늘의 경기</Link>
             <ul id="sports-dropdown" className="dropdown-content">
               <li><Link to="/football">축구</Link></li>
               <li><Link to="/basketball">농구</Link></li>

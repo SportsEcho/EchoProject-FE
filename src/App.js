@@ -17,15 +17,25 @@ function App() {
       <Router>
         <div>
           <Header />
-          <Navigation/>
+          <Navigation />
           <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/football" element={<FootballSchedule selectedDate={selectedDate} />} />
-            <Route path="/basketball" element={<BasketballSchedule selectedDate={selectedDate} />} />
-            <Route path="/baseball" element={<BaseballSchedule selectedDate={selectedDate} />} />
-            {/* 다른 경로들을 여기에 추가 */}
+            <Route path="/" element={<MainPage selectedDate={selectedDate} setSelectedDate={setSelectedDate} />} />
+            <Route path="/football" element={
+              <>
+              <FootballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
+              </>
+            } />
+            <Route path="/basketball" element={
+              <>
+                <BasketballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
+              </>
+            } />
+            <Route path="/baseball" element={
+              <>
+                <BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
+              </>
+            } />
           </Routes>
-          <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
           <Footer />
         </div>
       </Router>
