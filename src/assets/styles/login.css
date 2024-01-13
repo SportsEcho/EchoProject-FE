@@ -1,0 +1,57 @@
+.icon-container {
+  display: flex; /* Flexbox를 사용하여 아이콘들을 가로로 배치 */
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.mb-2 {
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+  margin-left: 10px; /* 오른쪽 여백 조정 */
+  margin-right: 10px; /* 오른쪽 여백 조정 */
+}
+
+.login-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+@media (max-width: 600px) {
+  .login-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+.gradient-custom {
+  background: linear-gradient(#76B6EA, #D4E6F1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+/* 글자 크기 조정 */
+.text-white, .text-white-50 {
+  font-size: 40px; /* 글자 크기를 20px로 설정 */
+}
+
+/* 입력 박스 크기 조정 */
+.form-control {
+  height: 20px; 
+  width: 400px;
+}
+.text-white, .text-white-50 {
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+}
+.form-group, .btn {
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+}
+.btn  {
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+  margin-left: 10px; /* 오른쪽 여백 조정 */
+  margin-right: 10px; /* 오른쪽 여백 조정 */
+  font-size: 20px; /* 글자 크기를 20px로 설정 */
+  color: white;
+  background-color:#A8A8F7;
+  border-radius: 10px;
+}
+

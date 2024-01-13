@@ -1,11 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/images/EchoLogo.jpeg';
 import shoppingCart from '../../assets/images/shopping-cart.png';
-import userImage from '../../assets/images/IMG_1851.JPG';
 import '../../assets/styles/index.css';
 
-function Header() {
-  console.log("Rendering Header");
+function Header({ isLoggedIn, handleLogout }) {
   return (
       <header>
         <div id="logo">
@@ -14,7 +13,11 @@ function Header() {
         <h1>EchoSports</h1>
         <div id="user-profile">
           <img src={shoppingCart} alt="Shopping Cart" />
-          <img src={userImage} alt="User Profile" />
+          {isLoggedIn ? (
+              <button onClick={handleLogout}>로그아웃</button>
+          ) : (
+              <Link to="/login">로그인</Link>
+          )}
         </div>
       </header>
   );
