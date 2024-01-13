@@ -3,16 +3,22 @@ import '../assets/styles/login.css'; // 로그인 페이지 스타일
 import googleIcon from '../assets/images/web_light_rd_na@2x.png';
 import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleSignupClick = () => {
+    navigate('/signup');
+  };
+
   return (
       <div className="gradient-custom d-flex vh-100 justify-content-center align-items-center"> {/* 여기에 스타일 추가 */}
         <div className="container-fluid row justify-content-center align-content-center">
           <div className="card bg-dark text-center" style={{ borderRadius: '1rem' }}> {/* text-center 추가 */}
             <div className="card-body p-5" style={{ textAlign: 'center' }}>
             <h2 className="text-white" style={{ marginBottom: '20px' }}>LOGIN</h2>
-<p className="text-white-50 mt-2 mb-5" style={{ marginBottom: '20px' }}>서비스 사용을 위해 로그인을 해주세요!</p>
-
+              <p className="text-white-50 mt-2 mb-5" style={{ marginBottom: '20px' }}>서비스 사용을 위해 로그인을 해주세요!</p>
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
                 <div className="mb-2">
@@ -43,7 +49,7 @@ function Login() {
                   <input type="password" className="form-control" name="password" placeholder="비밀번호" required />
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">로그인하기</button>
-                <button type="button" className="btn btn-secondary btn-block mt-2">회원가입</button> {/* 회원가입 버튼 추가 */}
+                <button type="button" className="btn btn-secondary btn-block mt-2" onClick={handleSignupClick}>회원가입</button>
               </form>
             </div>
           </div>
