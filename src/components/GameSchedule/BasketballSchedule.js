@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { fetchBasketballGames } from '../../api/gameApi'; // 이 함수는 API 호출을 담당합니다.
+import { fetchBasketballGames } from '../../api/gameApi';
 import '../../assets/styles/BasketballSchedule.css';
-function BasketballSchedule({ selectedDate }) {
+import Calendar from "../Calendar/Calendar";
+
+function BasketballSchedule() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const data = await fetchBasketballGames(selectedDate);
-        if (data && data.length > 0) {
-          setGames(data);
-          setError('');
-        } else {
-          setError('해당 날짜에 농구 경기가 없습니다.');
-        }
+        const data = await fetchBasketballGames(selectedDate.toISOString().split('T')[0]);
+        setGames(data || []);
+        setError('');
       } catch (error) {
+        setGames([]); // Clear previous games
         setError('농구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
@@ -23,14 +23,13 @@ function BasketballSchedule({ selectedDate }) {
     fetchGames();
   }, [selectedDate]);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  // API 응답으로부터 경기 정보를 표로 표시합니다.
   return (
       <div>
         <h2>농구 경기 일정</h2>
+        <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
+        {error && <div>{error}</div>}
+        {games.length === 0 && !error && <div>해당 날짜에 농구 경기가 없습니다.</div>}
+        {/* 경기 정보 표시 테이블 */}
         <table>
           <thead>
           <tr>
