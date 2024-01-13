@@ -1,17 +1,20 @@
 import React from 'react';
-import '../../assets/styles/index.css';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-function Navigation() {
+function Navigation({ selectedDate, onDateChange }) {
   console.log("Rendering Navigation");
+
   return (
       <nav>
         <ul>
           <li>
-            <a href="#calendar">경기 일정</a>
+            <Link to="/">메인 페이지</Link>
             <ul id="sports-dropdown" className="dropdown-content">
-              <li><a href="#football">축구</a></li>
-              <li><a href="#basketball">농구</a></li>
-              <li><a href="#baseball">야구</a></li>
+              <li><Link to="/football">축구</Link></li>
+              <li><Link to="/basketball">농구</Link></li>
+              <li><Link to="/baseball">야구</Link></li>
             </ul>
           </li>
           <li>
