@@ -21,7 +21,7 @@ function Navigation({ selectedDate, onDateChange }) {
             <a href="#comment">응원 댓글</a>
             <ul id="comment-dropdown" className="dropdown-content">
               <li><Link to="/comments/football">축구</Link></li>
-              <li><a href="#commentbasketball">농구</a></li>
+              <li><Link to="/comments/basketball">농구</Link></li>
               <li><a href="#commentbaseball">야구</a></li>
             </ul>
           </li>

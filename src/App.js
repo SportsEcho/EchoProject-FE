@@ -11,6 +11,8 @@ import MainPage from "./components/MainPage";
 import Login from './components/Login';
 import Signup from "./components/Signup";
 import FootballCommentsPage from './components/Comment/FootballCommentsPage';
+import BasketballCommentsPage
+  from "./components/Comment/BasketballCommentsPage";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -32,6 +34,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/comments/football" element={<FootballCommentsPage />} />
+            <Route path="/comments/basketball" element={<BasketballCommentsPage />} />
           </Routes>
           <Footer />
         </div>
