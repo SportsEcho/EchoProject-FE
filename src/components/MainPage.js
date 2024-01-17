@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import FootballSchedule from './GameSchedule/FootballSchedule';
 import BasketballSchedule from './GameSchedule/BasketballSchedule';
 import BaseballSchedule from './GameSchedule/BaseballSchedule';
 import { fetchFootballGames, fetchBasketballGames, fetchBaseballGames } from '../api/gameApi';
-import Calendar from "./Calendar/Calendar";
+
 
 function MainPage({ selectedDate, setSelectedDate }) {
-  const [footballGames, setFootballGames] = useState([]);
-  const [basketballGames, setBasketballGames] = useState([]);
-  const [baseballGames, setBaseballGames] = useState([]);
+  // const [footballGames, setFootballGames] = useState([]);
+  // const [basketballGames, setBasketballGames] = useState([]);
+  // const [baseballGames, setBaseballGames] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const footballData = await fetchFootballGames(selectedDate);
-        setFootballGames(footballData || []);
-        const basketballData = await fetchBasketballGames(selectedDate);
-        setBasketballGames(basketballData || []);
-        const baseballData = await fetchBaseballGames(selectedDate);
-        setBaseballGames(baseballData || []);
+        // 여기서 setFootballGames, setBasketballGames, setBaseballGames를 호출합니다.
+        await fetchFootballGames(selectedDate);
+        await fetchBasketballGames(selectedDate);
+        await fetchBaseballGames(selectedDate);
       } catch (error) {
         console.error("Error fetching games data:", error);
       }
@@ -34,7 +32,6 @@ function MainPage({ selectedDate, setSelectedDate }) {
         <BasketballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
         <BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />
       </div>
-
   );
 }
 
