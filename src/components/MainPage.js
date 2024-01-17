@@ -3,7 +3,7 @@ import FootballSchedule from './GameSchedule/FootballSchedule';
 import BasketballSchedule from './GameSchedule/BasketballSchedule';
 import BaseballSchedule from './GameSchedule/BaseballSchedule';
 import { fetchFootballGames, fetchBasketballGames, fetchBaseballGames } from '../api/gameApi';
-import Calendar from "./Calendar/Calendar";
+
 
 function MainPage({ selectedDate, setSelectedDate }) {
   const [footballGames, setFootballGames] = useState([]);

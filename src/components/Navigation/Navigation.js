@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
+import {Link} from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Navigation({ selectedDate, onDateChange }) {
