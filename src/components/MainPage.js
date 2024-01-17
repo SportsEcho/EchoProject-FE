@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import FootballSchedule from './GameSchedule/FootballSchedule';
 import BasketballSchedule from './GameSchedule/BasketballSchedule';
 import BaseballSchedule from './GameSchedule/BaseballSchedule';
