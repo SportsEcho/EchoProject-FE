@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import ProductPage from "../../assets/styles/ProductPage.css";
+import './ProductPage.css';
 
 function AddProductPage() {
   const [productData, setProductData] = useState({
