@@ -17,6 +17,9 @@ import BaseballCommentsPage from "./components/Comment/BaseballCommentsPage";
 import AddProductPage from "./components/Product/AddProductPage";
 import ProductDetailPage from "./components/Product/ProductDetailPage";
 import ProductPage from "./components/Product/ProductPage";
+import AddHotdeal from "./components/Hotdeal/AddHotdeal";
+import HotdealDetail from "./components/Hotdeal/HotdealDetail";
+import HotdealList from "./components/Hotdeal/HotdealList";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -40,9 +43,12 @@ function App() {
             <Route path="/comments/football" element={<FootballCommentsPage />} />
             <Route path="/comments/basketball" element={<BasketballCommentsPage />} />
             <Route path="/comments/baseball" element={<BaseballCommentsPage />} />
-            <Route path="/" element={<ProductPage />} />
+            <Route path="/products" element={<ProductPage />} />
             <Route path="/products/:productId" element={<ProductDetailPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
+            <Route path="/hotdeals" element={<HotdealList />} />
+            <Route path="/hotdeals/:hotdealId" element={<HotdealDetail />} />
+            <Route path="/add-hotdeal" element={<AddHotdeal />} />
           </Routes>
           <Footer />
         </div>
