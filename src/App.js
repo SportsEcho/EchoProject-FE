@@ -14,6 +14,9 @@ import FootballCommentsPage from './components/Comment/FootballCommentsPage';
 import BasketballCommentsPage
   from "./components/Comment/BasketballCommentsPage";
 import BaseballCommentsPage from "./components/Comment/BaseballCommentsPage";
+import AddProductPage from "./components/Product/AddProductPage";
+import ProductDetailPage from "./components/Product/ProductDetailPage";
+import ProductPage from "./components/Product/ProductPage";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -37,6 +40,9 @@ function App() {
             <Route path="/comments/football" element={<FootballCommentsPage />} />
             <Route path="/comments/basketball" element={<BasketballCommentsPage />} />
             <Route path="/comments/baseball" element={<BaseballCommentsPage />} />
+            <Route path="/" element={<ProductPage />} />
+            <Route path="/products/:productId" element={<ProductDetailPage />} />
+            <Route path="/add-product" element={<AddProductPage />} />
           </Routes>
           <Footer />
         </div>
