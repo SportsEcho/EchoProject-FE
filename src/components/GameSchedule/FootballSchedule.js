@@ -15,7 +15,7 @@ function FootballSchedule() {
         setGames(footballData || []);
         setError('');
       } catch (error) {
-        setGames([]); // Clear previous games
+        setGames([]);
         setError('축구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
