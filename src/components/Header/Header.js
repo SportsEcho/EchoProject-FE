@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import logo from '../../assets/images/EchoLogo.jpeg';
 import shoppingCart from '../../assets/images/shopping-cart.png';
 import '../../assets/styles/index.css';
+import axios from 'axios';
 
 function Header({ isLoggedIn, handleLogout }) {
   const navigate = useNavigate();
