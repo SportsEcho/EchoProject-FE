@@ -27,7 +27,7 @@ jobs:
           touch .env
           echo REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} >> .env
           echo REACT_APP_KAKAO_API_KEY=${{ secrets.REACT_APP_KAKAO_API_KEY }} >> .env
-          echo REACT_APP_NAVER_API_KEY=${{ secrests.REACT_APP_NAVER_API_KEY }} >> .env
+          echo REACT_APP_NAVER_API_KEY=${{ secrets.REACT_APP_NAVER_API_KEY }} >> .env
           echo REACT_APP_NAVER_API_SECRET=${{ secrets.REACT_APP_NAVER_API_SECRET }} >> .env
           echo REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }} >> .env
 
