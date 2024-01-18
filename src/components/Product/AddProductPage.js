@@ -13,7 +13,7 @@ function AddProductPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/products', productData);
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/products`, productData);
       alert('상품이 추가되었습니다.');
     } catch (error) {
       console.error("Error adding product", error);

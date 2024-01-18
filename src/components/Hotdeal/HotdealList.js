@@ -8,7 +8,7 @@ function HotdealList() {
   useEffect(() => {
     const fetchHotdeals = async () => {
       try {
-        const response = await axios.get('${process.env.REACT_APP_API_BASE_URL}/api/products/hotdeals');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/hotdeals`);
         setHotdeals(response.data);
       } catch (error) {
         console.error('Error fetching hotdeals:', error);

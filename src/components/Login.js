@@ -18,7 +18,7 @@ function Login() {
     const formData = new FormData(event.target);
 
     try {
-      await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/members/login', formData);
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, formData);
       alert('로그인이 완료되었습니다! 환영합니다!');
       navigate('/'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {

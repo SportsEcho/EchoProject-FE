@@ -18,7 +18,7 @@ function Signup() {
     const formData = new FormData(event.target);
 
     try {
-      const response = await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/members/signup', formData);
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, formData);
       alert('회원가입이 완료되었습니다!'); // 성공 알림
       navigate('/login');
     } catch (error) {
