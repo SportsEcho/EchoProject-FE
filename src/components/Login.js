@@ -18,12 +18,12 @@ function Login() {
     const formData = new FormData(event.target);
 
     try {
-      await axios.post('http://43.202.64.138:8080/api/members/login', formData);
-      alert('로그인이 완료되었습니다!환영합니다!');
+      await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/members/login', formData);
+      alert('로그인이 완료되었습니다! 환영합니다!');
       navigate('/'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
       console.error("Login error", error);
-      alert('로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.'); // 사용자에게 에러 메시지 표시
+      alert('로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.');
     }
   };
 
@@ -38,19 +38,19 @@ function Login() {
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=http://43.202.64.138:8080/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
                     <img src={googleIcon} className="login-icon" alt="Google Login" />
                   </a>
                 </div>
                 {/* Naver 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=http://43.202.64.138:8080/api/members/naver/callback&response_type=code`}>
+                  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/naver/callback&response_type=code`}>
                     <img src={naverIcon} className="login-icon" alt="Naver Login" />
                   </a>
                 </div>
                 {/* Kakao 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=http://43.202.64.138:8080/api/members/kakao/callback&response_type=code`}>
+                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/kakao/callback&response_type=code`}>
                     <img src={kakaoIcon} className="login-icon" alt="Kakao Login" />
                   </a>
                 </div>

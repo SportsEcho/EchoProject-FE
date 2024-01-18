@@ -10,7 +10,7 @@ function Header({ isLoggedIn, handleLogout }) {
 
   const handleLogoutClick = async () => {
     try {
-      await axios.post('http://localhost:8080/api/members/logout');
+      await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/members/logout');
       handleLogout(); // 상태 업데이트 및 UI 변경
       navigate('/'); // 로그아웃 후 리다이렉트
     } catch (error) {

@@ -12,7 +12,7 @@ function AddHotdeal() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/hotdeals', hotdealData);
+      await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/hotdeals', hotdealData);
       alert('핫딜이 추가되었습니다.');
     } catch (error) {
       console.error("Error adding hotdeal", error);
