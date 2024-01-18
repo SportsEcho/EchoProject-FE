@@ -22,7 +22,7 @@ function HotdealDetail() {
   const handlePurchase = async () => {
     try {
       // 핫딜 구매 요청을 보내는 로직
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}/purchase`, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}/purchase`, {
         // 필요한 데이터를 전송
       });
 
