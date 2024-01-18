@@ -15,10 +15,17 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const data = { email, password };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, formData);
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       alert('로그인이 완료되었습니다! 환영합니다!');
       navigate('/'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
