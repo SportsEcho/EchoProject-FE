@@ -18,6 +18,9 @@ function Header({ isLoggedIn, handleLogout }) {
       alert('로그아웃 중 문제가 발생했습니다. 다시 시도해 주세요.'); // 사용자에게 에러 알림
     }
   };
+  const handleCartClick = () => {
+    navigate('/cart'); // 장바구니 페이지로 이동
+  };
 
   return (
       <header>
@@ -26,7 +29,7 @@ function Header({ isLoggedIn, handleLogout }) {
         </div>
         <h1>EchoSports</h1>
         <div id="user-profile">
-          <img src={shoppingCart} alt="Shopping Cart" />
+          <img src={shoppingCart} alt="Shopping Cart" onClick={handleCartClick} />
           {isLoggedIn ? (
               <button onClick={handleLogoutClick}>로그아웃</button>
           ) : (
@@ -36,5 +39,4 @@ function Header({ isLoggedIn, handleLogout }) {
       </header>
   );
 }
-
 export default Header;
