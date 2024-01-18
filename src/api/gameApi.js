@@ -1,6 +1,6 @@
 export const fetchFootballGames = async (date) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/games/football?date=${date}`, {
+    const response = await fetch(`http://43.202.64.138:8080/api/games/football?date=${date}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
