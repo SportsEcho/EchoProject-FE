@@ -27,7 +27,8 @@ function AddProductPage() {
   return (
       <div>
         <h1>상품 추가</h1>
-        <form onSubmit={handleSubmit}>
+        <div className="form-container">
+        <form onSubmit={handleSubmit} className="add-product-form">
           <input
               name="name"
               value={productData.name}
@@ -55,6 +56,7 @@ function AddProductPage() {
           />
           <button type="submit">상품 추가</button>
         </form>
+      </div>
       </div>
   );
 }

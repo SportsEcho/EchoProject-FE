@@ -26,7 +26,7 @@ function AddHotdeal() {
   return (
       <div>
         <h1>핫딜 추가</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="add-product-form">
           <input
               name="title"
               value={hotdealData.title}

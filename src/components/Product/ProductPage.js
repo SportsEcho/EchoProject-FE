@@ -22,6 +22,9 @@ function ProductPage() {
   return (
       <div className="product-page">
         <h1>상품 목록</h1>
+        <div className="add-button-container">
+        <Link to="/add-product" className="btn btn-primary">상품 추가</Link>
+        </div>
         <div className="product-list">
           {products.map(product => (
               <div key={product.id} className="product">
