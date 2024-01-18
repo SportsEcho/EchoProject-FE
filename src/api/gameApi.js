@@ -1,6 +1,6 @@
 export const fetchFootballGames = async (date) => {
   try {
-    const response = await fetch(`http://43.202.64.138:8080/api/games/football?date=${date}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games/football?date=${date}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export const fetchBasketballGames = async (date) => {
   }
 
   try {
-    const response = await fetch(`https://api-basketball.p.rapidapi.com/games?season=${season}&league=12&date=${date}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/games?season=${season}&league=12&date=${date}`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': apiKey,
@@ -56,7 +56,7 @@ export const fetchBaseballGames = async (date) => {
   const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
   const year = new Date(date).getFullYear();
   try {
-    const response = await fetch(`https://api-baseball.p.rapidapi.com/games?season=${year}&league=1&date=${date}&`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/games?season=${year}&league=1&date=${date}&`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': apiKey,
