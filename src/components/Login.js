@@ -19,6 +19,7 @@ function Login() {
 
     try {
       await axios.post('http://localhost:8080/api/members/login', formData);
+      alert('로그인이 완료되었습니다!환영합니다!');
       navigate('/'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
       console.error("Login error", error);

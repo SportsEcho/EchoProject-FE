@@ -18,14 +18,18 @@ function Signup() {
     const formData = new FormData(event.target);
 
     try {
-      await axios.post('http://localhost:8080/api/members/signup', formData);
-      // 회원가입 성공 처리
+      const response = await axios.post('http://43.202.64.138:8080/api/members/signup', formData);
+      alert('회원가입이 완료되었습니다!'); // 성공 알림
       navigate('/login');
     } catch (error) {
-      console.error("Signup error", error);
-      alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      if (error.response && error.response.data) {
+        alert(error.response.data.message); // 서버에서 제공하는 오류 메시지
+      } else {
+        alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
     }
   };
+
 
 
   return (
