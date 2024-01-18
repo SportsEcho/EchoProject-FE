@@ -1,8 +1,10 @@
 name: Front CD
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,7 +15,7 @@ jobs:
 
     steps:
       - name: checkout
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -27,7 +29,7 @@ jobs:
           echo REACT_APP_KAKAO_API_KEY=${{ secrets.REACT_APP_KAKAO_API_KEY }} >> .env
           echo REACT_APP_NAVER_API_KEY=${{ secrests.REACT_APP_NAVER_API_KEY }} >> .env
           echo REACT_APP_NAVER_API_SECRET=${{ secrets.REACT_APP_NAVER_API_SECRET }} >> .env
-          REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }} >> .env
+          echo REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }} >> .env
 
       - name: Install
         run: npm install
