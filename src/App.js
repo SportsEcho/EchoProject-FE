@@ -20,6 +20,7 @@ import ProductPage from "./components/Product/ProductPage";
 import AddHotdeal from "./components/Hotdeal/AddHotdeal";
 import HotdealDetail from "./components/Hotdeal/HotdealDetail";
 import HotdealList from "./components/Hotdeal/HotdealList";
+import CartPage from "./components/Cart/CartPage";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -49,6 +50,7 @@ function App() {
             <Route path="/hotdeals" element={<HotdealList />} />
             <Route path="/hotdeals/:hotdealId" element={<HotdealDetail />} />
             <Route path="/add-hotdeal" element={<AddHotdeal />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
           <Footer />
         </div>
