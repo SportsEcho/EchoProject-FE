@@ -15,11 +15,18 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const data = { email, password };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, formData);
-      alert('회원가입이 완료되었습니다!'); // 성공 알림
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      alert('회원가입이 완료되었습니다!');
       navigate('/login');
     } catch (error) {
       if (error.response && error.response.data) {
@@ -29,6 +36,7 @@ function Signup() {
       }
     }
   };
+
 
 
   return (
