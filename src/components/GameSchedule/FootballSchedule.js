@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchFootballGames } from '../../api/gameApi';
 import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
 
 function FootballSchedule() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -22,6 +24,11 @@ function FootballSchedule() {
 
     fetchGames();
   }, [selectedDate]);
+
+  // 경기 상세 페이지로 이동하는 함수
+  const handleGameClick = (gameId) => {
+    navigate(`/games/${gameId}`);
+  };
 
   return (
       <div>
@@ -44,7 +51,7 @@ function FootballSchedule() {
             const { fixture, teams, goals } = game;
             const matchTime = new Date(fixture.date).toLocaleTimeString();
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(fixture.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td className="team-cell">
                     <img src={teams.home.logo} alt={teams.home.name} className="schedule-logo" />
