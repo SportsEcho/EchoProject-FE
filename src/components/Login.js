@@ -26,9 +26,20 @@ function Login() {
           'Content-Type': 'application/json'
         }
       });
+
       if (response.status === 200) {
-        // 로그인 성공 시 토큰 저장
-        localStorage.setItem('authToken', response.data.token);
+        // 응답 헤더에서 토큰 추출
+        const authToken = response.headers.authorization || response.headers.Authorization;
+        const refreshToken = response.headers.refreshauthorization || response.headers.Refreshauthorization;
+
+        // 로컬 스토리지에 토큰 저장
+        if (authToken) {
+          localStorage.setItem('authToken', authToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
+        }
+        if (refreshToken) {
+          localStorage.setItem('refreshToken', refreshToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
+        }
+
         alert('로그인이 완료되었습니다! 환영합니다!');
         navigate('/');
       }
