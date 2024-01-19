@@ -22,14 +22,15 @@ function Signup() {
     const data = { email, password, memberName };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, data, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      if (response.status === 201)
-      alert('회원가입이 완료되었습니다!');
-      navigate('/login');
+      if (response.status === 201) {
+        alert('회원가입이 완료되었습니다!');
+        navigate('/login');
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         alert(error.response.data.message); // 서버에서 제공하는 오류 메시지
