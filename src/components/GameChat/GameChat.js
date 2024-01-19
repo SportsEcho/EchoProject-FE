@@ -63,7 +63,7 @@ function GameChat() {
         <div class="col-md-6">
           <form class="form-inline">
             <div class="form-group">
-              <label for="name">채팅입력   </label>
+              <label htmlFor="name">채팅입력   </label>
               <input type="text" id="name" class="form-control" placeholder="Your name here..."/>
               <button id="send" class="btn btn-default" type="button">Send</button>
             </div>
