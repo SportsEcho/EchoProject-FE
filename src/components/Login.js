@@ -21,14 +21,15 @@ function Login() {
     const data = { email, password };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      if (response.status === 200)
-      alert('로그인이 완료되었습니다! 환영합니다!');
-      navigate('/'); // 로그인 성공 시 메인 페이지로 이동
+      if (response.status === 200) {
+        alert('로그인이 완료되었습니다! 환영합니다!');
+        navigate('/');
+      }
     } catch (error) {
       console.error("Login error", error);
       alert('로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.');
