@@ -51,7 +51,11 @@ $(function () {
 function GameChat() {
 
   //websocket connect - 페이지 들어오면 바로 연결
-  // connect();
+  var run = false;
+
+  if(run) {
+    connect();
+  }
 
   return(
     <div id="main-content" class="container">
