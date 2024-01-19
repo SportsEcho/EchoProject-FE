@@ -71,7 +71,10 @@ function BaseballSchedule() {
                       <span className="team-name">{teams.away.name}</span>
                     </div>
                   </td>
-                  <td className="inning-scores">{/* 이닝 점수 로직 */}</td>
+                  <td className="inning-scores">
+                    <div>{renderInnings(scores.home.innings)}</div>
+                    <div>{renderInnings(scores.away.innings)}</div>
+                  </td>
                 </tr>
             );
           })}
