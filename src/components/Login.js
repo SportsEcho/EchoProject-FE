@@ -21,13 +21,15 @@ function Login() {
     const data = { email, password };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      alert('로그인이 완료되었습니다! 환영합니다!');
-      navigate('/'); // 로그인 성공 시 메인 페이지로 이동
+      if (response.status === 200) {
+        alert('로그인이 완료되었습니다! 환영합니다!');
+        navigate('/');
+      }
     } catch (error) {
       console.error("Login error", error);
       alert('로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.');
@@ -45,7 +47,7 @@ function Login() {
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_DNS}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
                     <img src={googleIcon} className="login-icon" alt="Google Login" />
                   </a>
                 </div>

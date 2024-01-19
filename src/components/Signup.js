@@ -18,16 +18,19 @@ function Signup() {
 
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const data = { email, password };
+    const memberName = event.target.memberName.value;
+    const data = { email, password, memberName };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, data, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/signup`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      alert('회원가입이 완료되었습니다!');
-      navigate('/login');
+      if (response.status === 201) {
+        alert('회원가입이 완료되었습니다!');
+        navigate('/login');
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         alert(error.response.data.message); // 서버에서 제공하는 오류 메시지
@@ -50,7 +53,7 @@ function Signup() {
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_DNS}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
                     <img src={googleIcon} className="login-icon" alt="Google Login" />
                   </a>
                 </div>
@@ -74,6 +77,9 @@ function Signup() {
                 </div>
                 <div className="form-group">
                   <input type="password" className="form-control" name="password" placeholder="비밀번호" required />
+                </div>
+                <div className="form-group">
+                  <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required />
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">가입하기</button>
               </form>
