@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import logo from '../../assets/images/EchoLogo.jpeg';
 import shoppingCart from '../../assets/images/shopping-cart.png';
 import '../../assets/styles/index.css';
 import axios from 'axios';
 
-function Header({ isLoggedIn, handleLogout }) {
+function Header() {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 로컬 스토리지에서 토큰 확인
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
+  }, []);
 
   const handleLogoutClick = async () => {
     try {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/logout`, {}, {
         headers: {
-          'Content-Type': 'application/json' // JSON 형식의 데이터 전송을 위한 헤더 설정
+          'Content-Type': 'application/json'
         }
       });
-      handleLogout(); // 상태 업데이트 및 UI 변경
-      navigate('/'); // 로그아웃 후 리다이렉트
+      // 로그아웃 성공 시 토큰 삭제 및 상태 업데이트
+      localStorage.removeItem('authToken');
+      setIsLoggedIn(false);
+      navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
-      alert('로그아웃 중 문제가 발생했습니다. 다시 시도해 주세요.'); // 사용자에게 에러 알림
+      alert('로그아웃 중 문제가 발생했습니다. 다시 시도해 주세요.');
     }
   };
   const handleCartClick = () => {
