@@ -39,7 +39,7 @@ function Login() {
         if (refreshToken) {
           localStorage.setItem('refreshToken', refreshToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
         }
-
+        window.location.reload();
         alert('로그인이 완료되었습니다! 환영합니다!');
         navigate('/');
       }
