@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { fetchBaseballGames } from '../../api/gameApi';
+import { useNavigate } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 import '../../assets/styles/BaseballSchedule.css';
+
 function BaseballSchedule() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -16,17 +19,35 @@ function BaseballSchedule() {
           setGames(data);
           setError('');
         } else {
-          setGames([]); // 경기가 없으면 게임 리스트를 비웁니다.
+          setGames([]);
           setError('해당 날짜에 야구 경기가 없습니다.');
         }
       } catch (error) {
-        setGames([]); // 에러가 발생하면 게임 리스트를 비웁니다.
+        setGames([]);
         setError('야구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
 
     fetchData();
   }, [selectedDate]);
+
+  // 경기 클릭 핸들러
+  const handleGameClick = (gameId) => {
+    navigate(`/baseball/games/${gameId}`);
+  };
+
+  // 이닝별 점수 렌더링 함수
+  const renderInnings = (innings) => {
+    return (
+        <ul>
+          {Object.entries(innings).map(([inning, score], index) => (
+              <li key={index}>
+                {inning}회: {score || '-'}
+              </li>
+          ))}
+        </ul>
+    );
+  };
 
   return (
       <div>
@@ -45,27 +66,11 @@ function BaseballSchedule() {
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { teams, scores, date } = game;
+            const { teams, scores, date, id } = game;
             const matchTime = new Date(date).toLocaleTimeString();
 
-            // 이닝별 점수와 총점을 계산하는 함수
-            const renderInnings = (innings) => {
-              if (!innings || typeof innings !== 'object') {
-                return '이닝 정보가 없습니다';
-              }
-
-              const inningsScores = Object.entries(innings).map(([inning, score], index) => (
-                  <span key={index} className="inning-score">{inning}회: {score || '-'}</span>
-              ));
-              // 총점 계산
-              const totalScore = Object.values(innings).reduce((acc, score) => acc + (Number(score) || 0), 0);
-              inningsScores.push(<span key="total" className="total-score">합계: {totalScore}</span>);
-
-              return inningsScores;
-            };
-
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td>
                     <div className="team-cell">
@@ -80,8 +85,8 @@ function BaseballSchedule() {
                     </div>
                   </td>
                   <td className="inning-scores">
-                    <div>{renderInnings(scores.home.innings)}</div>
-                    <div>{renderInnings(scores.away.innings)}</div>
+                    {renderInnings(scores.home.innings)}
+                    {renderInnings(scores.away.innings)}
                   </td>
                 </tr>
             );

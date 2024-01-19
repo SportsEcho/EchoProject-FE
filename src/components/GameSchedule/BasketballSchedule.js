@@ -50,7 +50,7 @@ function BasketballSchedule() {
             const { teams, scores } = game;
             const matchTime = new Date(game.date).toLocaleTimeString();
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(game.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td className="team-cell">
                     <img src={teams.home.logo} alt={teams.home.name} className="team-logo" />
