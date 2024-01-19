@@ -27,6 +27,8 @@ function Login() {
         }
       });
       if (response.status === 200) {
+        // 로그인 성공 시 토큰 저장
+        localStorage.setItem('authToken', response.data.token);
         alert('로그인이 완료되었습니다! 환영합니다!');
         navigate('/');
       }
