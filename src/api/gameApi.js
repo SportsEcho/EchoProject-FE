@@ -118,4 +118,23 @@ export const fetchBasketballGameDetails = async (gameId) => {
     throw error;
   }
 };
+export const fetchBaseballGameDetails = async (gameId) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/baseball/games/${gameId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
 
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data; // 백엔드에서 받은 경기 세부 정보 반환
+  } catch (error) {
+    console.error('Error fetching baseball game details:', error);
+    throw error;
+  }
+};

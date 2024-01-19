@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { fetchBaseballGames } from '../../api/gameApi';
+import { useNavigate } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 import '../../assets/styles/BaseballSchedule.css';
+
 function BaseballSchedule() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -28,6 +31,11 @@ function BaseballSchedule() {
     fetchData();
   }, [selectedDate]);
 
+  // 경기 클릭 핸들러
+  const handleGameClick = (gameId) => {
+    navigate(`/baseball/games/${gameId}`);
+  };
+
   return (
       <div>
         <h2>야구 경기 일정</h2>
@@ -45,27 +53,11 @@ function BaseballSchedule() {
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { teams, scores, date } = game;
+            const { teams, scores, date, id } = game; // 게임 ID 추가
             const matchTime = new Date(date).toLocaleTimeString();
 
-            // 이닝별 점수와 총점을 계산하는 함수
-            const renderInnings = (innings) => {
-              if (!innings || typeof innings !== 'object') {
-                return '이닝 정보가 없습니다';
-              }
-
-              const inningsScores = Object.entries(innings).map(([inning, score], index) => (
-                  <span key={index} className="inning-score">{inning}회: {score || '-'}</span>
-              ));
-              // 총점 계산
-              const totalScore = Object.values(innings).reduce((acc, score) => acc + (Number(score) || 0), 0);
-              inningsScores.push(<span key="total" className="total-score">합계: {totalScore}</span>);
-
-              return inningsScores;
-            };
-
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td>
                     <div className="team-cell">
@@ -79,10 +71,7 @@ function BaseballSchedule() {
                       <span className="team-name">{teams.away.name}</span>
                     </div>
                   </td>
-                  <td className="inning-scores">
-                    <div>{renderInnings(scores.home.innings)}</div>
-                    <div>{renderInnings(scores.away.innings)}</div>
-                  </td>
+                  <td className="inning-scores">{/* 이닝 점수 로직 */}</td>
                 </tr>
             );
           })}
@@ -91,5 +80,4 @@ function BaseballSchedule() {
       </div>
   );
 }
-
 export default BaseballSchedule;
