@@ -13,6 +13,11 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
+  // 가격의 총합 계산
+  const totalPrice = cartItems.reduce((total, item) => {
+    return total + (item.productsQuantity * item.price);
+  }, 0);
+
   const handleDelete = async (productId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${productId}`);
@@ -45,6 +50,7 @@ function CartPage() {
               <button onClick={() => handleDelete(item.productId)}>삭제하기</button>
             </div>
         ))}
+        <p>총합: {totalPrice}원</p> {/* 가격의 총합 표시 */}
         <button onClick={handlePurchase}>구매하기</button>
       </div>
   );
