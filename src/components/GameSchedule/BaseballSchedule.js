@@ -19,11 +19,11 @@ function BaseballSchedule() {
           setGames(data);
           setError('');
         } else {
-          setGames([]); // 경기가 없으면 게임 리스트를 비웁니다.
+          setGames([]);
           setError('해당 날짜에 야구 경기가 없습니다.');
         }
       } catch (error) {
-        setGames([]); // 에러가 발생하면 게임 리스트를 비웁니다.
+        setGames([]);
         setError('야구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
@@ -34,6 +34,19 @@ function BaseballSchedule() {
   // 경기 클릭 핸들러
   const handleGameClick = (gameId) => {
     navigate(`/baseball/games/${gameId}`);
+  };
+
+  // 이닝별 점수 렌더링 함수
+  const renderInnings = (innings) => {
+    return (
+        <ul>
+          {Object.entries(innings).map(([inning, score], index) => (
+              <li key={index}>
+                {inning}회: {score || '-'}
+              </li>
+          ))}
+        </ul>
+    );
   };
 
   return (
@@ -53,7 +66,7 @@ function BaseballSchedule() {
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { teams, scores, date, id } = game; // 게임 ID 추가
+            const { teams, scores, date, id } = game;
             const matchTime = new Date(date).toLocaleTimeString();
 
             return (
@@ -72,8 +85,8 @@ function BaseballSchedule() {
                     </div>
                   </td>
                   <td className="inning-scores">
-                    <div>{renderInnings(scores.home.innings)}</div>
-                    <div>{renderInnings(scores.away.innings)}</div>
+                    {renderInnings(scores.home.innings)}
+                    {renderInnings(scores.away.innings)}
                   </td>
                 </tr>
             );
@@ -83,4 +96,5 @@ function BaseballSchedule() {
       </div>
   );
 }
+
 export default BaseballSchedule;
