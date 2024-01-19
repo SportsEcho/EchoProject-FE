@@ -26,6 +26,7 @@ function Login() {
           'Content-Type': 'application/json'
         }
       });
+      if (response.status === 200)
       alert('로그인이 완료되었습니다! 환영합니다!');
       navigate('/'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
@@ -45,7 +46,7 @@ function Login() {
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_DNS}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
                     <img src={googleIcon} className="login-icon" alt="Google Login" />
                   </a>
                 </div>
