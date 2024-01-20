@@ -42,7 +42,7 @@ function FootballGameDetails() {
           <p>장소: {gameDetails.venueName}</p>
           <p>점수: {gameDetails.homeGoal} - {gameDetails.awayGoal}</p>
         </div>
-        <GameChat />
+        <GameChat gameId={gameId} />
       </div>
   );
 }
