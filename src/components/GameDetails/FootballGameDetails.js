@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFootballGameDetails } from '../../api/gameApi';
+import GameChat from '../GameChat/GameChat';
 
 function FootballGameDetails() {
   const { gameId } = useParams();
@@ -43,6 +44,7 @@ function FootballGameDetails() {
           <p>장소: {gameDetails.venueName}</p>
           <p>점수: {gameDetails.homeGoal} - {gameDetails.awayGoal}</p>
         </div>
+        <GameChat />
       </div>
   );
 }
