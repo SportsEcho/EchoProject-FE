@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchBasketballGames } from '../../api/gameApi';
 import '../../assets/styles/BasketballSchedule.css';
 import Calendar from "../Calendar/Calendar";
 
 function BasketballSchedule() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -15,7 +17,7 @@ function BasketballSchedule() {
         setGames(data || []);
         setError('');
       } catch (error) {
-        setGames([]); // Clear previous games
+        setGames([]);
         setError('농구 경기 정보를 불러오는데 실패했습니다.');
       }
     };
@@ -23,13 +25,16 @@ function BasketballSchedule() {
     fetchGames();
   }, [selectedDate]);
 
+  const handleGameClick = (gameId) => {
+    navigate(`/basketball/games/${gameId}`);
+  };
+
   return (
       <div>
         <h2>농구 경기 일정</h2>
         <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
         {error && <div>{error}</div>}
         {games.length === 0 && !error && <div>해당 날짜에 농구 경기가 없습니다.</div>}
-        {/* 경기 정보 표시 테이블 */}
         <table>
           <thead>
           <tr>
@@ -45,7 +50,7 @@ function BasketballSchedule() {
             const { teams, scores } = game;
             const matchTime = new Date(game.date).toLocaleTimeString();
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(game.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td className="team-cell">
                     <img src={teams.home.logo} alt={teams.home.name} className="team-logo" />
