@@ -58,21 +58,21 @@ function GameChat() {
   }
 
   return(
-    <div id="main-content" class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <form class="form-inline">
-            <div class="form-group">
+    <div id="main-content" className="container">
+      <div className="row">
+        <div className="col-md-6">
+          <form className="form-inline">
+            <div className="form-group">
               <label htmlFor="name">채팅입력   </label>
-              <input type="text" id="name" class="form-control" placeholder="Your name here..."/>
-              <button id="send" class="btn btn-default" type="button">Send</button>
+              <input type="text" id="name" className="form-control" placeholder="Your name here..."/>
+              <button id="send" className="btn btn-default" type="button">Send</button>
             </div>
           </form>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <table id="conversation" class="table table-striped">
+      <div className="row">
+        <div className="col-md-12">
+          <table id="conversation" className="table table-striped">
             <thead>
             <tr>
               <th>Greetings</th>

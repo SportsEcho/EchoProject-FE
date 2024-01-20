@@ -33,8 +33,6 @@ function FootballGameDetails() {
   
   const matchTime = new Date(gameDetails.date).toLocaleTimeString();
 
-  console.log("check ");
-
   return (
       <div>
         <h1>Game Details</h1>
