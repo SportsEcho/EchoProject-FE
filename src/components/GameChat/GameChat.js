@@ -12,7 +12,7 @@ function GameChat(props) {
   useEffect(() => {
     // 페이지 들어오면 바로 연결
     stompClient.activate();
-  
+
     // 컴포넌트가 언마운트되거나 재렌더링될 때 실행되는 코드
     return () => {
       // 컴포넌트가 언마운트되거나 재렌더링될 때 websocket disconnect
@@ -44,19 +44,21 @@ function GameChat(props) {
       body: JSON.stringify({'message': $("#message").val()})
     });
   };
-  
-  //websocket connect - 페이지 들어오면 바로 연결
-  // stompClient.activate();
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // 페이지 새로고침 방지
+    sendMessage(); // sendMessage 함수 호출
+  };
+  
   return(
     <div id="main-content" className="container">
       <div className="row">
         <div className="col-md-6">
-          <form className="form-inline">
+          <form className="form-inline" onSubmit={handleFormSubmit}>
             <div className="form-group">
               <label htmlFor="message">채팅입력   </label>
-              <input type="text" id="message" className="form-control"/>
-              <button className="btn btn-default" type="button" onClick={sendMessage}>Send</button>
+              <input type="text" id="message" className="form-control" />
+              <button className="btn btn-default" type="submit">Send</button>
             </div>
           </form>
         </div>
