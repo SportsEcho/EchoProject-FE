@@ -21,7 +21,6 @@ import AddHotdeal from "./components/Hotdeal/AddHotdeal";
 import HotdealDetail from "./components/Hotdeal/HotdealDetail";
 import HotdealList from "./components/Hotdeal/HotdealList";
 import CartPage from "./components/Cart/CartPage";
-import GameChatPage from "./components/GameChat/GameChat";
 import FootballGameDetails from './components/GameDetails/FootballGameDetails';
 
 function App() {
