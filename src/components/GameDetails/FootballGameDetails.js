@@ -29,18 +29,19 @@ function FootballGameDetails() {
   if (!gameDetails) {
     return <div>경기 세부 정보를 불러올 수 없습니다.</div>;
   }
+  
+  const matchTime = new Date(gameDetails.date).toLocaleTimeString();
 
-  const { fixture, teams, goals, venue } = gameDetails;
-  const matchTime = new Date(fixture.date).toLocaleString();
+  console.log("check ");
 
   return (
       <div>
         <h1>Game Details</h1>
         <div className="game-details-container">
-          <h2>{`${teams.home.name} vs ${teams.away.name}`}</h2>
+          <h2>{`${gameDetails.homeTeamName} vs ${gameDetails.awayTeamName}`}</h2>
           <p>시간: {matchTime}</p>
-          <p>장소: {venue.name}</p>
-          <p>점수: {goals.home} - {goals.away}</p>
+          <p>장소: {gameDetails.venueName}</p>
+          <p>점수: {gameDetails.homeGoal} - {gameDetails.awayGoal}</p>
         </div>
       </div>
   );

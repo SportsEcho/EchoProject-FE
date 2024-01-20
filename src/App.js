@@ -22,6 +22,7 @@ import HotdealDetail from "./components/Hotdeal/HotdealDetail";
 import HotdealList from "./components/Hotdeal/HotdealList";
 import CartPage from "./components/Cart/CartPage";
 import GameChatPage from "./components/GameChat/GameChat";
+import FootballGameDetails from './components/GameDetails/FootballGameDetails';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -52,7 +53,8 @@ function App() {
             <Route path="/hotdeals/:hotdealId" element={<HotdealDetail />} />
             <Route path="/add-hotdeal" element={<AddHotdeal />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/gamechat" element={<GameChatPage />}></Route>
+            <Route path="/gamechat" element={<GameChatPage />} />
+            <Route path="/games/:gameId" element={<FootballGameDetails />} />
           </Routes>
           <Footer />
         </div>
