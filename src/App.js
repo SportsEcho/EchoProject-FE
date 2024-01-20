@@ -53,7 +53,6 @@ function App() {
             <Route path="/hotdeals/:hotdealId" element={<HotdealDetail />} />
             <Route path="/add-hotdeal" element={<AddHotdeal />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/gamechat" element={<GameChatPage />} />
             <Route path="/games/:gameId" element={<FootballGameDetails />} />
           </Routes>
           <Footer />

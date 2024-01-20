@@ -26,7 +26,6 @@ function Navigation({ selectedDate, onDateChange }) {
           </li>
           <li><Link to="/products">상품 구매</Link></li>
           <li><Link to="/hotdeals">핫 딜</Link></li>
-          <li><Link to="/gamechat">게임챗</Link></li>
         </ul>
       </nav>
   );
