@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFootballGameDetails } from '../../api/gameApi';
 import GameChat from '../GameChat/GameChat';
+import '../../assets/styles/GameDetails.css';
 
 function FootballGameDetails() {
   const { gameId } = useParams();
@@ -34,15 +35,40 @@ function FootballGameDetails() {
   const matchTime = new Date(gameDetails.date).toLocaleTimeString();
 
   return (
-      <div>
+      <div className='game-details'>
         <h1>Game Details</h1>
-        <div className="game-details-container">
-          <h2>{`${gameDetails.homeTeamName} vs ${gameDetails.awayTeamName}`}</h2>
-          <p>시간: {matchTime}</p>
-          <p>장소: {gameDetails.venueName}</p>
-          <p>점수: {gameDetails.homeGoal} - {gameDetails.awayGoal}</p>
+        <div className="game-details-container-info">
+          <table>
+            <thead>
+              <tr>
+                <th>시간</th>
+                <th>홈 팀</th>
+                <th>점수</th>
+                <th>어웨이 팀</th>
+                <th>장소</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr style={{ cursor: 'pointer' }}>
+                <td>{matchTime}</td>
+                <td>
+                  <img src={gameDetails.homeTeamLogo} alt={gameDetails.homeTeamName} className="schedule-logo" />
+                  {gameDetails.homeTeamName}
+                </td>
+                <td>{gameDetails.homeGoal} : {gameDetails.awayGoal}</td>
+                <td>
+                  <img src={gameDetails.awayTeamLogo} alt={gameDetails.awayTeamName} className="schedule-logo" />
+                  {gameDetails.awayTeamName}
+                </td>
+                <td>{gameDetails.venueName}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <GameChat gameId={gameId} />
+        <div className='game-details-container-gamechat'>
+          <GameChat gameId={gameId} />
+        </div>
       </div>
   );
 }
