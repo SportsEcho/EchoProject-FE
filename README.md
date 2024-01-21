@@ -64,6 +64,72 @@
 ![Screenshot 2024-01-10 at 12.13.56 PM.png](src%2Fassets%2Fimages%2FScreenshot%202024-01-10%20at%2012.13.56%20PM.png)
 ---
 
+### Code Convention
+
+- [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)를 기반으로 작성합니다.
+##### 줄 나누기
+
+- 하나의 식이 한 줄에 들어가지 않을 때에는, 다음과 같은 일반적인 원칙들을 따라서 두 줄로 나눈다.
+- 콤마 후에 두 줄로 나눈다.
+- 연산자(operator) 앞에서 두 줄로 나눈다.
+- 레벨이 낮은 원칙보다는 레벨이 높은 원칙에 따라 두 줄로 나눈다.
+- 앞줄과 같은 레벨의 식(expression)이 시작되는 새로운 줄은 앞줄과 들여쓰기를 일치시킨다.
+- 만약 위의 원칙들이 코드를 더 복잡하게 하거나 오른쪽 끝을 넘어간다면, 대신에 8개의 빈 칸을 사용해 들여쓴다
+##### 문(Statements)
+- 각각의 줄에는 최대한 하나의 문(statement)만 사용하도록 한다.
+- 
+##### PascalCase
+
+- 첫글자와 이어지는 단어의 첫글자를 대문자로 표기하는 방법
+- 예) `GoodPerson`, `MyKakaoCake`, `IAmDeveloper`
+- Pascal 이라는 프로그래밍 언어에서 이러한 표기법을 사용해서 유명해진 방식이야.
+- **PascalCase** (파스칼 케이스)
+    - 첫글자와 이어지는 단어의 첫글자를 대문자로 표기하는 방법
+    - 예) `GoodPerson`, `MyKakaoCake`, `IAmDeveloper`
+    - Pascal 이라는 프로그래밍 언어에서 이러한 표기법을 사용해서 유명해진 방식이야.
+
+##### 공백(Blank Spaces)
+
+- 공백은 다음과 같은 경우에 사용한다.
+
+- 괄호와 함께 나타나는 키워드는 공백으로 나누어야 한다.
+- 메서드 이름과 메서드의 여는 괄호 사이에 공백이 사용되어서는 안 된다는 것을 명심하자. 이렇게 하는 것은 메서드 호출과 키워드를 구별하는데 도움을 준다.
+- 공백은 인자(argument) 리스트에서 콤마 이후에 나타나야 한다.
+- .을 제외한 모든 이항(binary) 연산자는 연산수들과는 공백으로 분리되어져야 한다. 공백은 단항 연산자(++ 혹은 –)의 경우에는 사용해서는 안 된다.
+## **camelCase**
+
+(카멜 케이스)
+
+- 첫단어는 소문자로 표기하지만, 이어지는 단어의 첫글자는 대문자로 표기하는 방법
+- 예) `goodPerson`, `myKakaoCake`, `iAmDeveloper`
+
+## 디렉토리 구조
+
+도메인 - controller, dto, service, repository, entity,
+Global,
+Common
+
+##### RequestDto 작성 양식
+```java
+@Getter
+@NoArgsConstructor
+public RequestDto {
+  //...
+}
+```
+###### ResponseDto 작성 양식
+```java
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public ResponseDto {
+    //...
+    }
+```
+
+---
+
 ## 주요 기능
 
 ### 스포츠 경기 일정 및 결과 서비스
