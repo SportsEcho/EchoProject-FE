@@ -1,17 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as StompJs from "@stomp/stompjs";
 import $ from 'jquery';
 import '../../assets/styles/GameChat.css';
 
 const stompClient = new StompJs.Client({
-  brokerURL: 'ws://localhost:8080/websocket'
+  brokerURL: 'ws://13.125.46.61:8080/websocket',
 });
 
 function GameChat(props) {
 
+  const [member, setMember] = useState(null);
+
+  const readMember = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/members`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken'),
+          'RefreshAutorization': 'Bearer ' + localStorage.getItem('refreshToken'),
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+
+      setMember(data);
+      
+      // WebSocket 연결을 여기서 호출
+      stompClient.activate();
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching baseball game details:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
-    // 페이지 들어오면 바로 연결
-    stompClient.activate();
+    readMember();
 
     // 컴포넌트가 언마운트되거나 재렌더링될 때 실행되는 코드
     return () => {
@@ -20,8 +50,19 @@ function GameChat(props) {
     };
   }, []);
 
-  const appendMessage = (message) => {
-    $("#messages").append("<tr><td>" + message + "</td></tr>");
+  const appendEnterMessage = (content) => {
+    $("#messages").append("<tr><td>" + content + "</td></tr>");
+  }
+
+  const appendMessage = (sender, message, sendAt) => {
+    if(sender == null) {
+      appendEnterMessage(message);
+      return;
+    }
+
+    $("#messages")
+      .append("<tr><td>" + sender + " : " + sendAt + "</td>")
+      .append("<td>" + message + "</td></tr>");
   }
 
   //websocket connection 요청
@@ -30,7 +71,18 @@ function GameChat(props) {
 
     //websocket connection 성공 후, /topic/gameId 구독
     stompClient.subscribe(`/topic/${props.gameId}`, (message) => {
-      appendMessage(JSON.parse(message.body).content);
+      appendMessage(
+        JSON.parse(message.body).sender,
+        JSON.parse(message.body).content,
+        JSON.parse(message.body).sendAt
+      );
+    });
+
+    stompClient.publish({
+      destination: `/app/gameChat/${props.gameId}/enter`,
+      body: JSON.stringify({
+        'sender': member.memberName
+      })
     });
   };
 
@@ -41,7 +93,10 @@ function GameChat(props) {
   const sendMessage = () => {
     stompClient.publish({
       destination: `/app/gameChat/${props.gameId}`,
-      body: JSON.stringify({'message': $("#message").val()})
+      body: JSON.stringify({
+        'sender': member.memberName,
+        'message': $("#message").val()
+      })
     });
   };
 
@@ -56,7 +111,7 @@ function GameChat(props) {
         <div className="col-md-6">
           <form className="form-inline" onSubmit={handleFormSubmit}>
             <div className="form-group">
-              <label htmlFor="message">채팅입력   </label>
+              <label htmlFor="message">채팅입력  </label>
               <input type="text" id="message" className="form-control" />
               <button className="btn btn-default" type="submit">Send</button>
             </div>
