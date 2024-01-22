@@ -1,0 +1,11 @@
+.game-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.game-details-container-info {
+    margin-bottom: 70px;
+}
