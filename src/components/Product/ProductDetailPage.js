@@ -11,8 +11,7 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${productId}`);
-        // 백엔드 응답에서 실제 상품 정보는 'data' 필드 내에 있음
-        setProduct(response.data.data);
+        setProduct(response.data.data); // 데이터 구조에 맞게 수정
       } catch (error) {
         console.error("Error fetching product", error);
       }
@@ -28,15 +27,11 @@ function ProductDetailPage() {
     }
 
     try {
-      const authToken = localStorage.getItem('authToken'); // 인증 토큰 불러오기
+      const authToken = localStorage.getItem('authToken');
       await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`,
-          { productsQuantity: 1 }, // 수량은 예시로 1로 설정
-          {
-            headers: {
-              'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
-            }
-          }
+          { productsQuantity: 1 },
+          { headers: { Authorization: `Bearer ${authToken}` } }
       );
       alert(`${product.title}이(가) 장바구니에 추가되었습니다.`);
     } catch (error) {
@@ -49,9 +44,7 @@ function ProductDetailPage() {
 
   return (
       <div>
-        {/* 제목 및 내용 참조 수정 */}
         <h1>{product.title}</h1>
-        {/* 이미지 URL 수정 */}
         <img src={product.imageUrlList[0]} alt={product.title} />
         <p>{product.content}</p>
         <p>가격: {product.price}원</p>
@@ -61,4 +54,3 @@ function ProductDetailPage() {
 }
 
 export default ProductDetailPage;
-
