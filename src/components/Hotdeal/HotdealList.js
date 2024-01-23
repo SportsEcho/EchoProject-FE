@@ -8,7 +8,6 @@ function HotdealList() {
   useEffect(() => {
     const fetchHotdeals = async () => {
       try {
-        // 예시: 모든 핫딜을 가져오는 API 경로
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals`);
         if (response.data && response.data.data) {
           setHotdeals(response.data.data);
@@ -32,7 +31,10 @@ function HotdealList() {
         <ul>
           {hotdeals.map(hotdeal => (
               <li key={hotdeal.id}>
-                <Link to={`/hotdeals/${hotdeal.id}`}>{hotdeal.title}</Link>
+                <Link to={`/hotdeals/${hotdeal.id}`}>
+                  <img src={hotdeal.imageUrlList[0]} alt={hotdeal.title} style={{ width: '100px', height: '100px' }} />
+                  {hotdeal.title}
+                </Link>
                 - {hotdeal.sale}% 할인
               </li>
           ))}

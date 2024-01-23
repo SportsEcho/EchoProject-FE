@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchBaseballGameDetails } from '../../api/gameApi';
+import '../../assets/styles/GameDetails.css';
 
 function BaseballGameDetails() {
   const { gameId } = useParams();
@@ -30,18 +31,38 @@ function BaseballGameDetails() {
     return <div>경기 세부 정보를 불러올 수 없습니다.</div>;
   }
 
-  const { fixture, teams, scores } = gameDetails; // 예시 데이터 구조, 실제 구조에 따라 변경 필요
-  const matchTime = new Date(fixture.date).toLocaleString();
+  const matchTime = new Date(gameDetails.date).toLocaleTimeString();
 
   return (
-      <div>
+      <div className='game-details'>
         <h1>Baseball Game Details</h1>
-        <div className="game-details-container">
-          <h2>{`${teams.home.name} vs ${teams.away.name}`}</h2>
-          <p>시간: {matchTime}</p>
-          <p>장소: {fixture.venue.name}</p>
-          <p>점수: {scores.home} - {scores.away}</p>
-          {/* 여기에 추가적인 세부 정보를 표시 */}
+        <div className="game-details-container-info">
+          <table>
+            <thead>
+            <tr>
+              <th>시간</th>
+              <th>홈 팀</th>
+              <th>점수</th>
+              <th>어웨이 팀</th>
+              <th>장소</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style={{ cursor: 'pointer' }}>
+              <td>{matchTime}</td>
+              <td>
+                <img src={gameDetails.homeTeamLogo} alt={gameDetails.homeTeamName} className="schedule-logo" />
+                {gameDetails.homeTeamName}
+              </td>
+              <td>{gameDetails.homeGoal} : {gameDetails.awayGoal}</td>
+              <td>
+                <img src={gameDetails.awayTeamLogo} alt={gameDetails.awayTeamName} className="schedule-logo" />
+                {gameDetails.awayTeamName}
+              </td>
+              <td>{gameDetails.venueName}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
   );
