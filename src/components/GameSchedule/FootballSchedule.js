@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchGames } from '../../api/gameApi';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
+import {fetchGamesByDate} from "../../api/gameApi";
 
 function FootballSchedule() {
   const navigate = useNavigate();
