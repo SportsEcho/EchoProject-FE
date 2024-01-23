@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchFootballGames } from '../../api/gameApi';
+import { fetchGames } from '../../api/gameApi';
 import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
 
@@ -11,10 +11,12 @@ function FootballSchedule() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchGamesData = async () => {
       try {
-        const footballData = await fetchFootballGames(selectedDate.toISOString().split('T')[0]);
-        setGames(footballData || []);
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+        const allGames = await fetchGamesByDate(formattedDate);
+        const footballGames = allGames.filter(game => game.sports_type === 0); // 축구 경기만 필터링
+        setGames(footballGames);
         setError('');
       } catch (error) {
         setGames([]);
@@ -22,8 +24,9 @@ function FootballSchedule() {
       }
     };
 
-    fetchGames();
+    fetchGamesData();
   }, [selectedDate]);
+
 
   // 경기 상세 페이지로 이동하는 함수
   const handleGameClick = (gameId) => {
