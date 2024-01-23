@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { fetchBaseballGames } from '../../api/gameApi';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {fetchGamesByDate} from '../../api/gameApi';
+import {useNavigate} from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
-import '../../assets/styles/BaseballSchedule.css';
+import '../../assets/styles/FootballSchedule.css';
 
 function BaseballSchedule() {
   const navigate = useNavigate();
@@ -14,14 +14,10 @@ function BaseballSchedule() {
     const fetchData = async () => {
       try {
         const formattedDate = selectedDate.toISOString().split('T')[0];
-        const data = await fetchBaseballGames(formattedDate);
-        if (data && data.length > 0) {
-          setGames(data);
-          setError('');
-        } else {
-          setGames([]);
-          setError('해당 날짜에 야구 경기가 없습니다.');
-        }
+        const allGames = await fetchGamesByDate(formattedDate);
+        const baseballGames = allGames.filter(game => game.sports_type === 2); // 야구 경기만 필터링
+        setGames(baseballGames || []);
+        setError('');
       } catch (error) {
         setGames([]);
         setError('야구 경기 정보를 불러오는데 실패했습니다.');
@@ -30,7 +26,6 @@ function BaseballSchedule() {
 
     fetchData();
   }, [selectedDate]);
-
   // 경기 클릭 핸들러
   const handleGameClick = (gameId) => {
     navigate(`/baseball/games/${gameId}`);
@@ -60,34 +55,27 @@ function BaseballSchedule() {
           <tr>
             <th>시간</th>
             <th>홈 팀</th>
+            <th>점수</th>
             <th>어웨이 팀</th>
-            <th>이닝별 점수</th>
+            <th>장소</th>
           </tr>
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { teams, scores, date, id } = game;
-            const matchTime = new Date(date).toLocaleTimeString();
-
+            const matchTime = new Date(game.date).toLocaleTimeString();
             return (
-                <tr key={index} onClick={() => handleGameClick(id)} style={{ cursor: 'pointer' }}>
+                <tr key={index} onClick={() => handleGameClick(game.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
                   <td>
-                    <div className="team-cell">
-                      <img src={teams.home.logo} alt={teams.home.name} className="schedule-logo" />
-                      <span className="team-name">{teams.home.name}</span>
-                    </div>
+                    <img src={game.homeTeamLogo} alt={game.homeTeamName} className="schedule-logo" />
+                    {game.homeTeamName}
                   </td>
+                  <td>{game.homeGoal} : {game.awayGoal}</td>
                   <td>
-                    <div className="team-cell">
-                      <img src={teams.away.logo} alt={teams.away.name} className="schedule-logo" />
-                      <span className="team-name">{teams.away.name}</span>
-                    </div>
+                    <img src={game.awayTeamLogo} alt={game.awayTeamName} className="schedule-logo" />
+                    {game.awayTeamName}
                   </td>
-                  <td className="inning-scores">
-                    {renderInnings(scores.home.innings)}
-                    {renderInnings(scores.away.innings)}
-                  </td>
+                  <td>{game.venueName}</td>
                 </tr>
             );
           })}
