@@ -10,7 +10,7 @@ function HotdealDetail() {
     const fetchHotdeal = async () => {
       try {
         // 예시: 백엔드에서 hotdealId로 직접 핫딜을 조회할 수 있는 엔드포인트
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/{productId}/hotdeals/${hotdealId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}`);
         if (response.data && response.data.data) {
           setHotdeal(response.data.data);
         } else {
@@ -26,7 +26,7 @@ function HotdealDetail() {
 
   const handlePurchase = async () => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/products/{productId}/hotdeals/${hotdealId}/purchase`, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}/purchase`, {
         // 필요한 데이터를 전송
       });
       alert('핫딜 구매가 완료되었습니다.');
