@@ -9,8 +9,13 @@ function HotdealDetail() {
   useEffect(() => {
     const fetchHotdeal = async () => {
       try {
+        // 예시: 백엔드에서 hotdealId로 직접 핫딜을 조회할 수 있는 엔드포인트
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}`);
-        setHotdeal(response.data);
+        if (response.data && response.data.data) {
+          setHotdeal(response.data.data);
+        } else {
+          console.error("Invalid response structure:", response);
+        }
       } catch (error) {
         console.error('Error fetching hotdeal:', error);
       }
@@ -21,11 +26,9 @@ function HotdealDetail() {
 
   const handlePurchase = async () => {
     try {
-      // 핫딜 구매 요청을 보내는 로직
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}/purchase`, {
         // 필요한 데이터를 전송
       });
-
       alert('핫딜 구매가 완료되었습니다.');
     } catch (error) {
       console.error('구매 중 오류 발생:', error);
@@ -38,7 +41,7 @@ function HotdealDetail() {
   return (
       <div>
         <h1>{hotdeal.title}</h1>
-        <p>{hotdeal.description}</p>
+        <p>{hotdeal.content}</p> {/* 설명 필드명 수정 */}
         <p>{hotdeal.sale}% 할인</p>
         <button onClick={handlePurchase}>바로 구매하기</button>
         {/* 추가적인 핫딜 정보 표시 */}
