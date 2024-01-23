@@ -3,12 +3,13 @@ import axios from 'axios';
 import '../assets/styles/login.css';
 import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
-import {useNavigate} from 'react-router-dom';
-// import {useAuth} from "./AuthContext";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 function Login() {
-  // const { login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
+
   const handleSignupClick = () => {
     navigate('/signup');
   };
@@ -24,7 +25,7 @@ function Login() {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/login`, data, {
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
       });
 
       if (response.status === 200) {
@@ -32,16 +33,12 @@ function Login() {
         const authToken = response.headers.authorization || response.headers.Authorization;
         const refreshToken = response.headers.refreshauthorization || response.headers.Refreshauthorization;
 
-        // 로컬 스토리지에 토큰 저장
-        if (authToken) {
-          localStorage.setItem('authToken', authToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
-        }
-        if (refreshToken) {
-          localStorage.setItem('refreshToken', refreshToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
-        }
-        window.location.reload();
-        alert('로그인이 완료되었습니다! 환영합니다!');
+        // Context의 login 함수를 이용해 인증 상태를 업데이트
+        login(authToken.split(' ')[1], refreshToken.split(' ')[1]);
+
+        // 로그인 후 홈페이지로 이동
         navigate('/');
+        alert('로그인이 완료되었습니다! 환영합니다!');
       }
     } catch (error) {
       console.error("Login error", error);
