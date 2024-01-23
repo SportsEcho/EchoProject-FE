@@ -34,11 +34,11 @@ function Signup() {
     const password = event.target.password.value;
     const memberName = event.target.memberName.value;
 
-    const validationError = validateInput(email, password);
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
+    // const validationError = validateInput(email, password);
+    // if (validationError) {
+    //   setErrorMessage(validationError);
+    //   return;
+    // }
 
     const data = { email, password, memberName };
 
