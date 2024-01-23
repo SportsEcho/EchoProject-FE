@@ -9,7 +9,7 @@ function HotdealList() {
     const fetchHotdeals = async () => {
       try {
         // 예시: 모든 핫딜을 가져오는 API 경로
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/{productId}/hotdeals`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals`);
         if (response.data && response.data.data) {
           setHotdeals(response.data.data);
         } else {
