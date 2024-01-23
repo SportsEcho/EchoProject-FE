@@ -15,7 +15,7 @@ function BaseballSchedule() {
       try {
         const formattedDate = selectedDate.toISOString().split('T')[0];
         const allGames = await fetchGamesByDate(formattedDate);
-        const baseballGames = allGames.filter(game => game.sports_type === 2); // 야구 경기만 필터링
+        const baseballGames = allGames.filter(game => game.sportsType === "MLB"); // 야구 경기만 필터링
         setGames(baseballGames || []);
         setError('');
       } catch (error) {

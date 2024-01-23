@@ -15,7 +15,7 @@ function FootballSchedule() {
       try {
         const formattedDate = selectedDate.toISOString().split('T')[0];
         const allGames = await fetchGamesByDate(formattedDate);
-        const footballGames = allGames.filter(game => game.sports_type === 0); // 축구 경기만 필터링
+        const footballGames = allGames.filter(game => game.sportsType === "EPL"); // 축구 경기만 필터링
         setGames(footballGames);
         setError('');
       } catch (error) {
