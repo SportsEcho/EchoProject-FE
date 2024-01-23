@@ -10,15 +10,16 @@ function ProductPage() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`);
-        // 여기서 response.data가 배열인지 확인
-        if (Array.isArray(response.data)) {
-          setProducts(response.data);
+        if (Array.isArray(response.data.data)) {
+          setProducts(response.data.data);
         } else {
-          // response.data가 배열이 아닐 경우, 적절한 처리
-          console.error("Received data is not an array:", response.data);
+          // response.data.data가 배열이 아닐 경우, 적절한 처리
+          console.error("Received data is not an array:", response.data.data);
         }
       } catch (error) {
         console.error("Error fetching products", error);
+        // 에러 발생 시 전체 응답 로깅
+        console.error("Response data:", error.response.data);
       }
     };
 
