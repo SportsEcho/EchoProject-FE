@@ -24,17 +24,21 @@ function Header() {
           'RefreshAuthorization': 'Bearer ' + localStorage.getItem('refreshToken'),
         }
       });
-      
-      // 로그아웃 성공 시 토큰 삭제 및 상태 업데이트
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('refreshToken');
 
       setIsLoggedIn(false);
       navigate('/');
     } catch (error) {
-      console.error('Logout error:', error);
-      alert('로그아웃 중 문제가 발생했습니다. 다시 시도해 주세요.');
+      if(error.response.status == 401) {
+        alert('접속시간이 만료되었습니다. 다시 로그인 해주세요.');
+      
+        setIsLoggedIn(false);
+        navigate('/login');
+      }
     }
+
+    // 로그아웃 성공, 토큰만료 시 토큰 삭제 및 상태 업데이트
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
   };
   const handleCartClick = () => {
     navigate('/cart'); // 장바구니 페이지로 이동
