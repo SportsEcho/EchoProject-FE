@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchFootballGames } from '../../api/gameApi';
 import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
 
 function FootballSchedule() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
@@ -23,6 +25,11 @@ function FootballSchedule() {
     fetchGames();
   }, [selectedDate]);
 
+  // 경기 상세 페이지로 이동하는 함수
+  const handleGameClick = (gameId) => {
+    navigate(`/games/${gameId}`);
+  };
+
   return (
       <div>
         <h2>축구 경기 일정</h2>
@@ -41,21 +48,20 @@ function FootballSchedule() {
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { fixture, teams, goals } = game;
-            const matchTime = new Date(fixture.date).toLocaleTimeString();
+            const matchTime = new Date(game.date).toLocaleTimeString();
             return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleGameClick(game.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
-                  <td className="team-cell">
-                    <img src={teams.home.logo} alt={teams.home.name} className="schedule-logo" />
-                    <span className="team-name">{teams.home.name}</span>
+                  <td>
+                    <img src={game.homeTeamLogo} alt={game.homeTeamName} className="schedule-logo" />
+                    {game.homeTeamName}
                   </td>
-                  <td className="score">{goals.home} : {goals.away}</td>
-                  <td className="team-cell">
-                    <img src={teams.away.logo} alt={teams.away.name} className="schedule-logo" />
-                    <span className="team-name">{teams.away.name}</span>
+                  <td>{game.homeGoal} : {game.awayGoal}</td>
+                  <td>
+                    <img src={game.awayTeamLogo} alt={game.awayTeamName} className="schedule-logo" />
+                    {game.awayTeamName}
                   </td>
-                  <td className="venue-name">{fixture.venue.name || 'TBC'}</td>
+                  <td>{game.venueName}</td>
                 </tr>
             );
           })}
