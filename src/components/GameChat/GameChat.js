@@ -17,15 +17,16 @@ function GameChat(props) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken'),
-          'RefreshAutorization': 'Bearer ' + localStorage.getItem('refreshToken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         },
       });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+
+      //유효한 jwt가 없는 경우
+      if (response.status === 401 || response.status === 403) {
+        alert('로그인이 필요한 서비스입니다.');
+        window.location.replace('/login');
       }
-  
+    
       const data = await response.json();
 
       setMember(data);
@@ -35,7 +36,6 @@ function GameChat(props) {
 
       return data;
     } catch (error) {
-      console.error('Error fetching baseball game details:', error);
       throw error;
     }
   };
@@ -51,7 +51,7 @@ function GameChat(props) {
   }, []);
 
   const appendEnterMessage = (content) => {
-    $("#messages").append("<tr><td>" + content + "</td></tr>");
+    $("#messages").append("<tr><td id='announcement'>" + content + "</td></tr>");
   }
 
   const appendMessage = (sender, message, sendAt) => {
@@ -60,9 +60,18 @@ function GameChat(props) {
       return;
     }
 
-    $("#messages")
-      .append("<tr><td>" + sender + " : " + sendAt + "</td>")
-      .append("<td>" + message + "</td></tr>");
+    
+    if(member.memberName === sender) {
+      //내가 보낸 메세지라면
+
+      $("#messages")
+      .append("<div id='my_msg'><div id='my_msg_header'>" + sender + " : " + sendAt + "</div><div id='my_msg_body'>" + message + "</div></div>");
+    } else {
+      //내가 보낸 메세지가 아니라면
+
+      $("#messages")
+      .append("<div id='your_msg'><div id='your_msg_header'>" + sender + " : " + sendAt + "</div><div id='your_msg_body'>" + message + "</div></div>");
+    }
   }
 
   //websocket connection 요청
@@ -102,37 +111,38 @@ function GameChat(props) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault(); // 페이지 새로고침 방지
+
     sendMessage(); // sendMessage 함수 호출
+
+    $("#message").val(""); // 입력창 초기화
   };
   
-  return(
+  return (
     <div id="main-content" className="container">
       <div className="row">
         <div className="col-md-6">
           <form className="form-inline" onSubmit={handleFormSubmit}>
             <div className="form-group">
-              <label htmlFor="message">채팅입력  </label>
+              <label htmlFor="message">채팅입력</label>
               <input type="text" id="message" className="form-control" />
-              <button className="btn btn-default" type="submit">Send</button>
+              <button className="btn btn-default" type="submit">
+                Send
+              </button>
             </div>
           </form>
         </div>
       </div>
       <div className="row">
         <div className="col-md-12">
-          <table id="conversation" className="table table-striped">
-            <thead>
-            <tr>
-              <th>Messages</th>
-            </tr>
-            </thead>
-            <tbody id="messages">
-            </tbody>
-          </table>
+          <div className="chat-container">
+            <div id="conversation" className="table table-striped">
+              <tbody id="messages"></tbody>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default GameChat;

@@ -13,18 +13,18 @@ function Signup() {
     navigate('/login');
   };
 
-  const validateInput = (email, password) => {
-    const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~@#$%^&+=!])(?=\\S+$).{8,15}$/;
+  // const validateInput = (email, password) => {
+  //   const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+  //   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~@#$%^&+=!])(?=\\S+$).{8,15}$/;
 
-    if (!emailRegex.test(email)) {
-      return "유효하지 않은 이메일 형식입니다.";
-    }
-    if (!passwordRegex.test(password)) {
-      return "비밀번호는 8~15자리, 대소문자, 숫자, 특수문자를 포함해야 합니다.";
-    }
-    return null;
-  };
+  //   if (!emailRegex.test(email)) {
+  //     return "유효하지 않은 이메일 형식입니다.";
+  //   }
+  //   if (!passwordRegex.test(password)) {
+  //     return "비밀번호는 8~15자리, 대소문자, 숫자, 특수문자를 포함해야 합니다.";
+  //   }
+  //   return null;
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,11 +34,11 @@ function Signup() {
     const password = event.target.password.value;
     const memberName = event.target.memberName.value;
 
-    const validationError = validateInput(email, password);
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
+    // const validationError = validateInput(email, password);
+    // if (validationError) {
+    //   setErrorMessage(validationError);
+    //   return;
+    // }
 
     const data = { email, password, memberName };
 
