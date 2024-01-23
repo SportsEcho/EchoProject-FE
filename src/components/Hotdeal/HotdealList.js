@@ -8,8 +8,13 @@ function HotdealList() {
   useEffect(() => {
     const fetchHotdeals = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/hotdeals`);
-        setHotdeals(response.data);
+        // 예시: 모든 핫딜을 가져오는 API 경로
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/{productId}/hotdeals`);
+        if (response.data && response.data.data) {
+          setHotdeals(response.data.data);
+        } else {
+          console.error("Invalid response structure:", response);
+        }
       } catch (error) {
         console.error('Error fetching hotdeals:', error);
       }
@@ -22,7 +27,7 @@ function HotdealList() {
       <div>
         <h1>핫딜 목록</h1>
         <div className="add-button-container">
-        <Link to="/add-hotdeal" className="btn btn-primary">핫딜 추가</Link>
+          <Link to="/add-hotdeal" className="btn btn-primary">핫딜 추가</Link>
         </div>
         <ul>
           {hotdeals.map(hotdeal => (
