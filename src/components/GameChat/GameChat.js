@@ -17,15 +17,16 @@ function GameChat(props) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken'),
-          'RefreshAutorization': 'Bearer ' + localStorage.getItem('refreshToken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         },
       });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+
+      //유효한 jwt가 없는 경우
+      if (response.status === 401) {
+        alert('로그인이 필요한 서비스입니다.');
+        window.location.replace('/login');
       }
-  
+    
       const data = await response.json();
 
       setMember(data);
@@ -35,7 +36,6 @@ function GameChat(props) {
 
       return data;
     } catch (error) {
-      console.error('Error fetching baseball game details:', error);
       throw error;
     }
   };
