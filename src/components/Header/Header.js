@@ -34,7 +34,12 @@ function Header() {
 
   return (
       <header>
-        // ... (기타 코드)
+        <div id="logo">
+          <img src={logo} alt="EchoSports Logo" />
+        </div>
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <h1>EchoSports</h1>
+        </Link>
         <div id="user-profile">
           <img src={shoppingCart} alt="Shopping Cart" onClick={handleCartClick} />
           {authToken ? (
