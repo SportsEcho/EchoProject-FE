@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../assets/styles/comment.css';
+import {fetchFootballGames} from "../../api/gameApi";
 
 function FootballCommentsPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,18 +16,17 @@ function FootballCommentsPage() {
     setIsLoggedIn(!!token);
 
     // 경기 목록 불러오기
-    fetchGames();
+    fetchGames(new Date().toISOString().split('T')[0]);
   }, []);
 
-  const fetchGames = async () => {
+  const fetchGames = async (date) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/games`);
-      setGames(response.data);
+      const gamesData = await fetchFootballGames(date);
+      setGames(gamesData || []);
     } catch (error) {
       console.error('경기 목록을 불러오는데 실패했습니다.', error);
     }
   };
-
   const fetchComments = async (gameId, token) => {
     if (!gameId) return;
     try {
