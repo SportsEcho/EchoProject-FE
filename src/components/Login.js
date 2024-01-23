@@ -38,6 +38,7 @@ function Login() {
 
         // 로그인 후 홈페이지로 이동
         navigate('/');
+        window.location.reload();
         alert('로그인이 완료되었습니다! 환영합니다!');
       }
     } catch (error) {
