@@ -28,10 +28,16 @@ function ProductDetailPage() {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`, {
-        productsQuantity: 1, // 수량은 예시로 1로 설정
-      });
-      // 상품 이름 필드를 'product.title'로 수정
+      const authToken = localStorage.getItem('authToken'); // 인증 토큰 불러오기
+      await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`,
+          { productsQuantity: 1 }, // 수량은 예시로 1로 설정
+          {
+            headers: {
+              'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
+            }
+          }
+      );
       alert(`${product.title}이(가) 장바구니에 추가되었습니다.`);
     } catch (error) {
       console.error("장바구니 추가 중 오류 발생: ", error);
