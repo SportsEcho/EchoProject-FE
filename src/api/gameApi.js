@@ -1,6 +1,6 @@
-export const fetchFootballGames = async (date) => {
+export const fetchGames = async (date, sportsType) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games/football?date=${date}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games?date=${date}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -11,68 +11,10 @@ export const fetchFootballGames = async (date) => {
       throw new Error('Network response was not ok');
     }
 
-    const data = await response.json();
-    return data; // 백엔드에서 받은 경기 정보 반환
+    return await response.json();
   } catch (error) {
-    console.error('Error fetching football data:', error);
-  }
-};
-
-export const fetchBasketballGames = async (date) => {
-  const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
-  const year = new Date(date).getFullYear();
-  let season;
-
-  if (year === 2024) {
-    // 2024년일 경우 -를 사용하여 시즌 설정
-    season = `${year - 1}-${year}`;
-  } else if (year === 2023) {
-    // 2023년일 경우 +를 사용하여 시즌 설정
-    season = `${year}-${year + 1}`;
-  }
-
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/games?season=${season}&league=12&date=${date}`, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    console.log('Response data:', data); // 응답 데이터 로그
-    return data.response; // 경기 정보 반환
-  } catch (error) {
-    console.error('Error fetching basketball data:', error);
-  }
-};
-
-export const fetchBaseballGames = async (date) => {
-  const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
-  const year = new Date(date).getFullYear();
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/games?season=${year}&league=1&date=${date}&`, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    console.log('Response data:', data); // 응답 데이터 로그
-    return data.response; // 경기 정보 반환
-  } catch (error) {
-    console.error('Error fetching baseball data:', error);
+    console.error(`Error fetching ${sportsType} data:`, error);
+    throw error;
   }
 };
 
@@ -100,7 +42,7 @@ export const fetchFootballGameDetails = async (gameId) => {
 
 export const fetchBasketballGameDetails = async (gameId) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/basketball/games/${gameId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games/details/${gameId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -120,7 +62,7 @@ export const fetchBasketballGameDetails = async (gameId) => {
 };
 export const fetchBaseballGameDetails = async (gameId) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/baseball/games/${gameId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games/details/${gameId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
