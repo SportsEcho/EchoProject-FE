@@ -9,7 +9,7 @@ const NaverRedirect = async () => {
     const navigate = useNavigate();
   
     try {
-        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/naver/callback?code=${code}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/members/naver/callback?code=${code}`);
 
         if (response.status === 200) {
             const authToken = response.headers.authorization || response.headers.Authorization;
