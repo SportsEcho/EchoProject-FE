@@ -1,4 +1,5 @@
-export const fetchGames = async (date, sportsType) => {
+// 모든 스포츠 경기를 가져오는 API 호출 함수
+export const fetchGamesByDate = async (date) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/games?date=${date}`, {
       method: 'GET',
@@ -11,9 +12,9 @@ export const fetchGames = async (date, sportsType) => {
       throw new Error('Network response was not ok');
     }
 
-    return await response.json();
+    return await response.json(); // 백엔드에서 받은 경기 정보 반환
   } catch (error) {
-    console.error(`Error fetching ${sportsType} data:`, error);
+    console.error('Error fetching game data:', error);
     throw error;
   }
 };
