@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 import {useAuth} from "./AuthContext";
 
 function Login() {
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
   const handleSignupClick = () => {
     navigate('/signup');
