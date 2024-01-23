@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import '../assets/styles/signup.css';
-import googleIcon from '../assets/images/web_light_rd_na@2x.png';
 import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 function Signup() {
   const navigate = useNavigate();
@@ -98,6 +97,7 @@ function Signup() {
                 <div className="form-group">
                   <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required />
                 </div>
+                {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
                 <button type="submit" className="btn btn-primary btn-block">가입하기</button>
               </form>
               <button className="btn btn-secondary btn-block mt-2" onClick={handleBackToLogin}>돌아가기</button>

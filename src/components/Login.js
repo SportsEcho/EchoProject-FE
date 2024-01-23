@@ -1,18 +1,35 @@
 import React from 'react';
 import axios from 'axios';
 import '../assets/styles/login.css';
-import googleIcon from '../assets/images/web_light_rd_na@2x.png';
 import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {useAuth} from "./AuthContext";
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
-
   const handleSignupClick = () => {
     navigate('/signup');
   };
-
+  //소셜 로그인 검사 로직 이게 있어야합니다 나중에 스리슬쩍 주석을 풀어서 테스트 ㅎ해보세요~
+  // const handleSocialLogin = async (socialToken) => {
+  //   try {
+  //     const response = await axios.post('소셜 로그인 검증 URL', { token: socialToken });
+  //     if (response.status === 200) {
+  //       const authToken = response.headers.authorization || response.headers.Authorization;
+  //
+  //       // 로컬 스토리지에 토큰 저장
+  //       localStorage.setItem('authToken', authToken.split(' ')[1]);
+  //
+  //       // 메인 페이지로 리디렉션
+  //       navigate('/');
+  //     }
+  //   } catch (error) {
+  //     console.error("Social login error", error);
+  //     alert('소셜 로그인 중 오류가 발생했습니다.');
+  //   }
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
