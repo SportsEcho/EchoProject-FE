@@ -19,11 +19,16 @@ function Header() {
     try {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/logout`, {}, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken'),
+          'RefreshAuthorization': 'Bearer ' + localStorage.getItem('refreshToken'),
         }
       });
+      
       // 로그아웃 성공 시 토큰 삭제 및 상태 업데이트
       localStorage.removeItem('authToken');
+      localStorage.removeItem('refreshToken');
+
       setIsLoggedIn(false);
       navigate('/');
     } catch (error) {
