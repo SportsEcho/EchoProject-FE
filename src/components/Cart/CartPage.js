@@ -7,16 +7,16 @@ function CartPage() {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const token = localStorage.getItem('userToken'); // 사용자 토큰 가져오기
-        if (!token) {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
           alert('로그인이 필요합니다.');
           return;
         }
 
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/carts`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${authToken}` }
         });
-        setCartItems(response.data);
+        setCartItems(response.data); // 데이터 구조에 맞게 수정
       } catch (error) {
         console.error("장바구니 정보 조회 중 오류 발생: ", error);
       }
@@ -25,16 +25,13 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
-  // 가격의 총합 계산
-  const totalPrice = cartItems.reduce((total, item) => {
-    return total + (item.productsQuantity * item.price);
-  }, 0);
+  const totalPrice = cartItems.reduce((total, item) => total + (item.productsQuantity * item.price), 0);
 
   const handleDelete = async (productId) => {
     try {
-      const token = localStorage.getItem('userToken');
+      const authToken = localStorage.getItem('authToken');
       await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${productId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
       setCartItems(cartItems.filter(item => item.productId !== productId));
       alert('상품이 장바구니에서 삭제되었습니다.');
@@ -46,16 +43,15 @@ function CartPage() {
 
   const handlePurchase = async () => {
     try {
-      const token = localStorage.getItem('userToken');
-      if (!token) {
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
         alert('로그인이 필요합니다.');
         return;
       }
 
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/purchase`,
-          {},
-          { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/purchase`, {}, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
       alert('모든 상품이 구매되었습니다.');
       setCartItems([]); // 장바구니 비우기
     } catch (error) {
@@ -83,3 +79,4 @@ function CartPage() {
 }
 
 export default CartPage;
+

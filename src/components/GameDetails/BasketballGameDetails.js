@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchBasketballGameDetails } from '../../api/gameApi';
 import '../../assets/styles/GameDetails.css';
+import GameChat from "../GameChat/GameChat";
 
 function BasketballGameDetails() {
   const { gameId } = useParams();
@@ -63,6 +64,9 @@ function BasketballGameDetails() {
             </tr>
             </tbody>
           </table>
+        </div>
+        <div className='game-details-container-gamechat'>
+          <GameChat gameId={gameId} />
         </div>
       </div>
   );
