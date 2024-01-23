@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchBasketballGames } from '../../api/gameApi';
-import '../../assets/styles/BasketballSchedule.css';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
+import {fetchGamesByDate} from "../../api/gameApi";
 
 function BasketballSchedule() {
   const navigate = useNavigate();
@@ -10,11 +10,14 @@ function BasketballSchedule() {
   const [games, setGames] = useState([]);
   const [error, setError] = useState('');
 
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const data = await fetchBasketballGames(selectedDate.toISOString().split('T')[0]);
-        setGames(data || []);
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+        const allGames = await fetchGamesByDate(formattedDate);
+        const basketballGames = allGames.filter(game => game.sports_type === 1); // 농구 경기만 필터링
+        setGames(basketballGames || []);
         setError('');
       } catch (error) {
         setGames([]);
@@ -24,6 +27,7 @@ function BasketballSchedule() {
 
     fetchGames();
   }, [selectedDate]);
+
 
   const handleGameClick = (gameId) => {
     navigate(`/basketball/games/${gameId}`);
@@ -42,33 +46,25 @@ function BasketballSchedule() {
             <th>홈 팀</th>
             <th>점수</th>
             <th>어웨이 팀</th>
-            <th>쿼터별 점수</th>
+            <th>장소</th>
           </tr>
           </thead>
           <tbody>
           {games.map((game, index) => {
-            const { teams, scores } = game;
             const matchTime = new Date(game.date).toLocaleTimeString();
             return (
                 <tr key={index} onClick={() => handleGameClick(game.id)} style={{ cursor: 'pointer' }}>
                   <td>{matchTime}</td>
-                  <td className="team-cell">
-                    <img src={teams.home.logo} alt={teams.home.name} className="team-logo" />
-                    <span className="team-name">{teams.home.name}</span>
-                  </td>
-                  <td className="score">{scores.home.total} : {scores.away.total}</td>
-                  <td className="team-cell">
-                    <img src={teams.away.logo} alt={teams.away.name} className="team-logo" />
-                    <span className="team-name">{teams.away.name}</span>
-                  </td>
                   <td>
-                    <div className="quarter-scores-container">
-                      <div className="quarter-score">Q1: {scores.home.quarter_1} : {scores.away.quarter_1}</div>
-                      <div className="quarter-score">Q2: {scores.home.quarter_2} : {scores.away.quarter_2}</div>
-                      <div className="quarter-score">Q3: {scores.home.quarter_3} : {scores.away.quarter_3}</div>
-                      <div className="quarter-score">Q4: {scores.home.quarter_4} : {scores.away.quarter_4}</div>
-                    </div>
+                    <img src={game.homeTeamLogo} alt={game.homeTeamName} className="schedule-logo" />
+                    {game.homeTeamName}
                   </td>
+                  <td>{game.homeGoal} : {game.awayGoal}</td>
+                  <td>
+                    <img src={game.awayTeamLogo} alt={game.awayTeamName} className="schedule-logo" />
+                    {game.awayTeamName}
+                  </td>
+                  <td>{game.venueName}</td>
                 </tr>
             );
           })}
