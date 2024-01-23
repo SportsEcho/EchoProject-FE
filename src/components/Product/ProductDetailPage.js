@@ -37,9 +37,11 @@ function ProductDetailPage() {
 
   return (
       <div>
-        <h1>{product.name}</h1>
-        <img src={product.imageUrl} alt={product.name} />
-        <p>{product.description}</p>
+        {/* 제목 및 내용 참조 수정 */}
+        <h1>{product.title}</h1>
+        {/* 이미지 URL 수정 */}
+        <img src={product.imageUrlList[0]} alt={product.title} />
+        <p>{product.content}</p>
         <p>가격: {product.price}원</p>
         <button onClick={handleAddToCart}>장바구니에 추가</button>
       </div>

@@ -10,7 +10,13 @@ function ProductPage() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`);
-        setProducts(response.data);
+        // 여기서 response.data가 배열인지 확인
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          // response.data가 배열이 아닐 경우, 적절한 처리
+          console.error("Received data is not an array:", response.data);
+        }
       } catch (error) {
         console.error("Error fetching products", error);
       }
@@ -18,6 +24,11 @@ function ProductPage() {
 
     fetchProducts();
   }, []);
+
+  // 데이터가 배열이 아니면 렌더링하지 않음
+  if (!Array.isArray(products)) {
+    return <div>Loading or error...</div>;
+  }
 
   return (
       <div className="product-page">
@@ -29,10 +40,12 @@ function ProductPage() {
           {products.map(product => (
               <div key={product.id} className="product">
                 <Link to={`/products/${product.id}`}>
-                  <img src={product.imageUrl} alt={product.name} />
+                  {/* 이미지 URL 수정 */}
+                  <img src={product.imageUrlList[0]} alt={product.title} />
                 </Link>
-                <h2>{product.name}</h2>
-                <p>{product.description}</p>
+                {/* 제목 및 내용 참조 수정 */}
+                <h2>{product.title}</h2>
+                <p>{product.content}</p>
                 <p>가격: {product.price}원</p>
               </div>
           ))}
