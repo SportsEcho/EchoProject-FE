@@ -12,24 +12,7 @@ function Login() {
   const handleSignupClick = () => {
     navigate('/signup');
   };
-  //소셜 로그인 검사 로직 이게 있어야합니다 나중에 스리슬쩍 주석을 풀어서 테스트 ㅎ해보세요~
-  // const handleSocialLogin = async (socialToken) => {
-  //   try {
-  //     const response = await axios.post('소셜 로그인 검증 URL', { token: socialToken });
-  //     if (response.status === 200) {
-  //       const authToken = response.headers.authorization || response.headers.Authorization;
-  //
-  //       // 로컬 스토리지에 토큰 저장
-  //       localStorage.setItem('authToken', authToken.split(' ')[1]);
-  //
-  //       // 메인 페이지로 리디렉션
-  //       navigate('/');
-  //     }
-  //   } catch (error) {
-  //     console.error("Social login error", error);
-  //     alert('소셜 로그인 중 오류가 발생했습니다.');
-  //   }
-  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -83,13 +66,13 @@ function Login() {
                 {/*</div>*/}
                 {/* Naver 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/naver/callback&response_type=code`}>
+                  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/naver&response_type=code`}>
                     <img src={naverIcon} className="login-icon" alt="Naver Login" />
                   </a>
                 </div>
                 {/* Kakao 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/kakao/callback&response_type=code`}>
+                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/kakao&response_type=code`}>
                     <img src={kakaoIcon} className="login-icon" alt="Kakao Login" />
                   </a>
                 </div>
