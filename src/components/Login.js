@@ -59,11 +59,11 @@ function Login() {
 
               <div className="icon-container mb-4">
                 {/* Google 로그인 링크 */}
-                <div className="mb-2">
-                  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_DNS}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>
-                    <img src={googleIcon} className="login-icon" alt="Google Login" />
-                  </a>
-                </div>
+                {/*<div className="mb-2">*/}
+                {/*  <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_DNS}/api/members/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile`}>*/}
+                {/*    <img src={googleIcon} className="login-icon" alt="Google Login" />*/}
+                {/*  </a>*/}
+                {/*</div>*/}
                 {/* Naver 로그인 링크 */}
                 <div className="mb-2">
                   <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/naver/callback&response_type=code`}>
