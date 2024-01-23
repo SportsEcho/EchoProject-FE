@@ -10,10 +10,6 @@ import BaseballSchedule from './components/GameSchedule/BaseballSchedule';
 import MainPage from "./components/MainPage";
 import Login from './components/Login';
 import Signup from "./components/Signup";
-import FootballCommentsPage from './components/Comment/FootballCommentsPage';
-import BasketballCommentsPage
-  from "./components/Comment/BasketballCommentsPage";
-import BaseballCommentsPage from "./components/Comment/BaseballCommentsPage";
 import AddProductPage from "./components/Product/AddProductPage";
 import ProductDetailPage from "./components/Product/ProductDetailPage";
 import ProductPage from "./components/Product/ProductPage";
@@ -51,12 +47,12 @@ function App() {
                   selectedDate={selectedDate.toISOString().split('T')[0]}/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/>
-              <Route path="/comments/football"
-                     element={<FootballCommentsPage/>}/>
-              <Route path="/comments/basketball"
-                     element={<BasketballCommentsPage/>}/>
-              <Route path="/comments/baseball"
-                     element={<BaseballCommentsPage/>}/>
+              {/*<Route path="/comments/football"*/}
+              {/*       element={<FootballCommentsPage/>}/>*/}
+              {/*<Route path="/comments/basketball"*/}
+              {/*       element={<BasketballCommentsPage/>}/>*/}
+              {/*<Route path="/comments/baseball"*/}
+              {/*       element={<BaseballCommentsPage/>}/>*/}
               <Route path="/products" element={<ProductPage/>}/>
               <Route path="/products/:productId"
                      element={<ProductDetailPage/>}/>
