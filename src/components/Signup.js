@@ -51,6 +51,7 @@ function Signup() {
       if (response.status === 201) {
         alert('회원가입이 완료되었습니다!');
         navigate('/login');
+        window.location.reload();
       }
     } catch (error) {
       const errorResponse = error.response?.data?.message || '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.';
