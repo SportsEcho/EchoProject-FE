@@ -29,10 +29,12 @@ function ProductPage() {
           {products.map(product => (
               <div key={product.id} className="product">
                 <Link to={`/products/${product.id}`}>
-                  <img src={product.imageUrl} alt={product.name} />
+                  {/* 이미지 URL 수정 */}
+                  <img src={product.imageUrlList[0]} alt={product.title} />
                 </Link>
-                <h2>{product.name}</h2>
-                <p>{product.description}</p>
+                {/* 제목 및 내용 참조 수정 */}
+                <h2>{product.title}</h2>
+                <p>{product.content}</p>
                 <p>가격: {product.price}원</p>
               </div>
           ))}
