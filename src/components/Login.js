@@ -4,7 +4,7 @@ import '../assets/styles/login.css';
 import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from "./AuthContext";
+// import {useAuth} from "./AuthContext";
 
 function Login() {
   // const { login } = useAuth();
