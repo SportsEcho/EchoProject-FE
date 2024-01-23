@@ -24,6 +24,9 @@ import CartPage from "./components/Cart/CartPage";
 import FootballGameDetails from './components/GameDetails/FootballGameDetails';
 import {AuthProvider} from './components/AuthContext';
 
+import KakaoRedirect from './components/OAuth/KakaoRedirect';
+import NaverRedirect from './components/OAuth/NaverRedirect';
+
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,6 +66,9 @@ function App() {
               <Route path="/add-hotdeal" element={<AddHotdeal/>}/>
               <Route path="/cart" element={<CartPage/>}/>
               <Route path="/games/:gameId" element={<FootballGameDetails/>}/>
+
+              <Route path="/redirect/kakao" element={<KakaoRedirect/>}/>
+              <Route path="/redirect/naver" element={<NaverRedirect/>}/>
             </Routes>
             <Footer/>
           </div>

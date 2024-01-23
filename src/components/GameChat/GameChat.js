@@ -22,7 +22,7 @@ function GameChat(props) {
       });
 
       //유효한 jwt가 없는 경우
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         alert('로그인이 필요한 서비스입니다.');
         window.location.replace('/login');
       }
