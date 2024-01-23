@@ -27,6 +27,10 @@ function FootballSchedule() {
 
   // 경기 상세 페이지로 이동하는 함수
   const handleGameClick = (gameId) => {
+    //login 정보 확인 후 로그인 안되어있으면 로그인 페이지로 이동
+
+    
+
     navigate(`/games/${gameId}`);
   };
 

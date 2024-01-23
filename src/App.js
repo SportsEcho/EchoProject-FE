@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, {useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
 import Footer from './components/Footer/Footer';
@@ -22,6 +22,7 @@ import HotdealDetail from "./components/Hotdeal/HotdealDetail";
 import HotdealList from "./components/Hotdeal/HotdealList";
 import CartPage from "./components/Cart/CartPage";
 import FootballGameDetails from './components/GameDetails/FootballGameDetails';
+import {AuthProvider} from './components/AuthContext';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -31,32 +32,42 @@ function App() {
   };
 
   return (
-      <Router>
-        <div>
-          <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-          <Navigation />
-          <Routes>
-            <Route path="/" element={<MainPage selectedDate={selectedDate} setSelectedDate={setSelectedDate} />} />
-            <Route path="/football" element={<FootballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />} />
-            <Route path="/basketball" element={<BasketballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />} />
-            <Route path="/baseball" element={<BaseballSchedule selectedDate={selectedDate.toISOString().split('T')[0]} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/comments/football" element={<FootballCommentsPage />} />
-            <Route path="/comments/basketball" element={<BasketballCommentsPage />} />
-            <Route path="/comments/baseball" element={<BaseballCommentsPage />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/products/:productId" element={<ProductDetailPage />} />
-            <Route path="/add-product" element={<AddProductPage />} />
-            <Route path="/hotdeals" element={<HotdealList />} />
-            <Route path="/hotdeals/:hotdealId" element={<HotdealDetail />} />
-            <Route path="/add-hotdeal" element={<AddHotdeal />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/games/:gameId" element={<FootballGameDetails />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <div>
+            <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
+            <Navigation/>
+            <Routes>
+              <Route path="/" element={<MainPage selectedDate={selectedDate}
+                                                 setSelectedDate={setSelectedDate}/>}/>
+              <Route path="/football" element={<FootballSchedule
+                  selectedDate={selectedDate.toISOString().split('T')[0]}/>}/>
+              <Route path="/basketball" element={<BasketballSchedule
+                  selectedDate={selectedDate.toISOString().split('T')[0]}/>}/>
+              <Route path="/baseball" element={<BaseballSchedule
+                  selectedDate={selectedDate.toISOString().split('T')[0]}/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/>
+              <Route path="/comments/football"
+                     element={<FootballCommentsPage/>}/>
+              <Route path="/comments/basketball"
+                     element={<BasketballCommentsPage/>}/>
+              <Route path="/comments/baseball"
+                     element={<BaseballCommentsPage/>}/>
+              <Route path="/products" element={<ProductPage/>}/>
+              <Route path="/products/:productId"
+                     element={<ProductDetailPage/>}/>
+              <Route path="/add-product" element={<AddProductPage/>}/>
+              <Route path="/hotdeals" element={<HotdealList/>}/>
+              <Route path="/hotdeals/:hotdealId" element={<HotdealDetail/>}/>
+              <Route path="/add-hotdeal" element={<AddHotdeal/>}/>
+              <Route path="/cart" element={<CartPage/>}/>
+              <Route path="/games/:gameId" element={<FootballGameDetails/>}/>
+            </Routes>
+            <Footer/>
+          </div>
+        </Router>
+      </AuthProvider>
   );
 }
 
