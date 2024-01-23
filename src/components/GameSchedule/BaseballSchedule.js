@@ -31,19 +31,6 @@ function BaseballSchedule() {
     navigate(`/baseball/games/${gameId}`);
   };
 
-  // 이닝별 점수 렌더링 함수
-  const renderInnings = (innings) => {
-    return (
-        <ul>
-          {Object.entries(innings).map(([inning, score], index) => (
-              <li key={index}>
-                {inning}회: {score || '-'}
-              </li>
-          ))}
-        </ul>
-    );
-  };
-
   return (
       <div>
         <h2>야구 경기 일정</h2>
