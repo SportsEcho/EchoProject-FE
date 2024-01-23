@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../assets/styles/signup.css';
 import googleIcon from '../assets/images/web_light_rd_na@2x.png';
@@ -8,17 +8,39 @@ import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleBackToLogin = () => {
     navigate('/login');
   };
 
+  const validateInput = (email, password) => {
+    const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~@#$%^&+=!])(?=\\S+$).{8,15}$/;
+
+    if (!emailRegex.test(email)) {
+      return "유효하지 않은 이메일 형식입니다.";
+    }
+    if (!passwordRegex.test(password)) {
+      return "비밀번호는 8~15자리, 대소문자, 숫자, 특수문자를 포함해야 합니다.";
+    }
+    return null;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage('');
 
     const email = event.target.email.value;
     const password = event.target.password.value;
     const memberName = event.target.memberName.value;
+
+    const validationError = validateInput(email, password);
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
     const data = { email, password, memberName };
 
     try {
@@ -32,15 +54,10 @@ function Signup() {
         navigate('/login');
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        alert(error.response.data.message); // 서버에서 제공하는 오류 메시지
-      } else {
-        alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
-      }
+      const errorResponse = error.response?.data?.message || '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.';
+      setErrorMessage(errorResponse);
     }
   };
-
-
 
   return (
       <div className="gradient-custom d-flex vh-100 justify-content-center align-items-center">
