@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchFootballGames } from '../../api/gameApi';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import '../../assets/styles/FootballSchedule.css';
 import Calendar from "../Calendar/Calendar";
+import {fetchGamesByDate} from "../../api/gameApi";
 
 function FootballSchedule() {
   const navigate = useNavigate();
@@ -11,10 +11,12 @@ function FootballSchedule() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchGamesData = async () => {
       try {
-        const footballData = await fetchFootballGames(selectedDate.toISOString().split('T')[0]);
-        setGames(footballData || []);
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+        const allGames = await fetchGamesByDate(formattedDate);
+        const footballGames = allGames.filter(game => game.sports_type === 0); // 축구 경기만 필터링
+        setGames(footballGames);
         setError('');
       } catch (error) {
         setGames([]);
@@ -22,15 +24,12 @@ function FootballSchedule() {
       }
     };
 
-    fetchGames();
+    fetchGamesData();
   }, [selectedDate]);
+
 
   // 경기 상세 페이지로 이동하는 함수
   const handleGameClick = (gameId) => {
-    //login 정보 확인 후 로그인 안되어있으면 로그인 페이지로 이동
-
-    
-
     navigate(`/games/${gameId}`);
   };
 

@@ -1,31 +1,30 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Context 생성
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-// Context를 사용하기 위한 커스텀 훅
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider 컴포넌트
-export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export const AuthProvider = ({ children }) => {
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
 
-  // 로그인 상태 변경 함수
-  const login = () => {
-    setIsLoggedIn(true);
+  const login = (newAuthToken, newRefreshToken) => {
+    localStorage.setItem('authToken', newAuthToken);
+    localStorage.setItem('refreshToken', newRefreshToken);
+    setAuthToken(newAuthToken);
+    setRefreshToken(newRefreshToken);
   };
 
-  // 로그아웃 상태 변경 함수
   const logout = () => {
-    setIsLoggedIn(false);
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
+    setAuthToken(null);
+    setRefreshToken(null);
   };
 
-  // Context 값 제공
   return (
-      <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+      <AuthContext.Provider value={{ authToken, refreshToken, login, logout }}>
         {children}
       </AuthContext.Provider>
   );
-}
+};
