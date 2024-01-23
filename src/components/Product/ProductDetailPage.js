@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../../assets/styles/ProductPage.css';
 
-
 function ProductDetailPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -12,7 +11,8 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${productId}`);
-        setProduct(response.data);
+        // 백엔드 응답에서 실제 상품 정보는 'data' 필드 내에 있음
+        setProduct(response.data.data);
       } catch (error) {
         console.error("Error fetching product", error);
       }
@@ -22,11 +22,17 @@ function ProductDetailPage() {
   }, [productId]);
 
   const handleAddToCart = async () => {
+    if (!product) {
+      alert('상품 정보를 불러오는 중입니다.');
+      return;
+    }
+
     try {
-       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`, {
         productsQuantity: 1, // 수량은 예시로 1로 설정
       });
-      alert(`${product.name}이(가) 장바구니에 추가되었습니다.`);
+      // 상품 이름 필드를 'product.title'로 수정
+      alert(`${product.title}이(가) 장바구니에 추가되었습니다.`);
     } catch (error) {
       console.error("장바구니 추가 중 오류 발생: ", error);
       alert('장바구니 추가 중 오류가 발생했습니다.');
