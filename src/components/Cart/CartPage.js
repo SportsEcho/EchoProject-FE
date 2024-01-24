@@ -44,6 +44,7 @@ function CartPage() {
   const handleGoToOrder = () => {
     navigate('/order'); // 주문 페이지로 이동
   };
+  const totalPrice = cartItems.reduce((total, item) => total + (item.productsQuantity * item.price), 0);
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
 
@@ -56,6 +57,7 @@ function CartPage() {
               <p>{item.productName}</p>
               <p>수량: {item.productsQuantity}</p>
               <p>가격: {item.price}원</p>
+              <p>총합: {totalPrice}원</p>
               <button onClick={() => handleDelete(item.productId)}>삭제하기</button>
             </div>
         ))}
