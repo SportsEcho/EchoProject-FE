@@ -42,22 +42,29 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [currentPage, itemsPerPage]);
+  }, [itemsPerPage]);
 
   useEffect(() => {
     fetchProducts(currentPage).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
+      setHasMore(newProducts.length === itemsPerPage);
     });
   }, [currentPage, fetchProducts]);
-
   // 스크롤 이벤트 핸들러
-  const handleScroll = useCallback(throttle(() => {
-    if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
-      return;
-    }
-    setCurrentPage(prevPage => prevPage + 1);
-  }, 200), [isLoading, hasMore]); // 200ms 간격으로 이벤트를 처리
-
+  const handleScroll = useCallback(
+      throttle(() => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop <
+            document.documentElement.offsetHeight ||
+            isLoading ||
+            !hasMore
+        ) {
+          return;
+        }
+        setCurrentPage(prevPage => prevPage + 1);
+      }, 200),
+      [isLoading, hasMore] // `isLoading`와 `hasMore`를 의존성 배열에 포함시킵니다.
+  );
   useEffect(() => {
     // 스크롤 이벤트 리스너 추가
     window.addEventListener('scroll', handleScroll);
