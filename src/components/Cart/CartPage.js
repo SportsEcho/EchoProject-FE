@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -25,8 +27,6 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
-  const totalPrice = cartItems.reduce((total, item) => total + (item.productsQuantity * item.price), 0);
-
   const handleDelete = async (productId) => {
     try {
       const authToken = localStorage.getItem('authToken');
@@ -41,24 +41,10 @@ function CartPage() {
     }
   };
 
-  const handlePurchase = async () => {
-    try {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
-        alert('로그인이 필요합니다.');
-        return;
-      }
-
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/carts/purchase`, {}, {
-        headers: { Authorization: `Bearer ${authToken}` }
-      });
-      alert('모든 상품이 구매되었습니다.');
-      setCartItems([]); // 장바구니 비우기
-    } catch (error) {
-      console.error("구매 처리 중 오류 발생: ", error);
-      alert('구매 처리 중 오류가 발생했습니다.');
-    }
+  const handleGoToOrder = () => {
+    navigate('/order'); // 주문 페이지로 이동
   };
+  const totalPrice = cartItems.reduce((total, item) => total + (item.productsQuantity * item.price), 0);
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
 
@@ -67,16 +53,18 @@ function CartPage() {
         <h1>장바구니</h1>
         {cartItems.map(item => (
             <div key={item.productId}>
+              <img src={item.imageUrlList[0]} alt={item.productName} style={{ width: '50px', height: '50px' }} />
               <p>{item.productName}</p>
               <p>수량: {item.productsQuantity}</p>
+              <p>가격: {item.price}원</p>
+              <p>총합: {totalPrice}원</p>
               <button onClick={() => handleDelete(item.productId)}>삭제하기</button>
             </div>
         ))}
         <p>총합: {totalPrice}원</p>
-        <button onClick={handlePurchase}>구매하기</button>
+        <button onClick={handleGoToOrder}>구매하기</button>
       </div>
   );
 }
 
 export default CartPage;
-
