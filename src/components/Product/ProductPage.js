@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/ProductPage.css';
+import { throttle } from 'lodash';
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -11,6 +12,7 @@ function ProductPage() {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
 
+  // 의존성 배열에서 `currentPage`를 제거합니다.
   const fetchProducts = useCallback(async (page) => {
     setIsLoading(true);
     try {
@@ -27,7 +29,11 @@ function ProductPage() {
         },
         headers
       });
-      return response.data.data || [];
+      const newProducts = response.data.data || [];
+      if (newProducts.length < itemsPerPage) {
+        setHasMore(false);
+      }
+      return newProducts;
     } catch (error) {
       setError('상품을 불러오는 데 실패했습니다.');
       console.error("Error fetching products", error);
@@ -35,32 +41,30 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [itemsPerPage]); // `currentPage`를 제거했습니다.
 
   useEffect(() => {
     fetchProducts(currentPage).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
-      setHasMore(newProducts.length === itemsPerPage);
     });
   }, [currentPage, fetchProducts]);
 
-  // 스크롤 이벤트 핸들러
-  const handleScroll = useCallback(() => {
-    if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
-      return;
-    }
-    setCurrentPage(prevPage => prevPage + 1);
-  }, [isLoading, hasMore]);
-
+  // `handleScroll` 콜백을 `useEffect` 내부에서 정의합니다.
   useEffect(() => {
-    // 스크롤 이벤트 리스너 추가
-    window.addEventListener('scroll', handleScroll);
+    const throttledHandleScroll = throttle(() => {
+      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
+        return;
+      }
+      setCurrentPage(prevPage => prevPage + 1);
+    }, 200);
+
+    window.addEventListener('scroll', throttledHandleScroll);
 
     return () => {
-      // 컴포넌트 언마운트 시 스크롤 이벤트 리스너 제거
-      window.removeEventListener('scroll', handleScroll);
+      throttledHandleScroll.cancel();
+      window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, [handleScroll]);
+  }, [isLoading, hasMore]); // 의존성 배열에서 `throttle` 함수를 제거하고 `isLoading`, `hasMore`를 추가했습니다.
 
   if (error) {
     return <div>{error}</div>;
