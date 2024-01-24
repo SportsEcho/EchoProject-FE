@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -25,8 +27,6 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
-  const totalPrice = cartItems.reduce((total, item) => total + (item.productsQuantity * item.price), 0);
-
   const handleDelete = async (productId) => {
     try {
       const authToken = localStorage.getItem('authToken');
@@ -39,6 +39,10 @@ function CartPage() {
       console.error("장바구니 삭제 중 오류 발생: ", error);
       alert('장바구니 삭제 중 오류가 발생했습니다.');
     }
+  };
+
+  const handleGoToOrder = () => {
+    navigate('/order'); // 주문 페이지로 이동
   };
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
@@ -56,7 +60,7 @@ function CartPage() {
             </div>
         ))}
         <p>총합: {totalPrice}원</p>
-        <button onClick={handlePurchase}>구매하기</button>
+        <button onClick={handleGoToOrder}>구매하기</button>
       </div>
   );
 }
