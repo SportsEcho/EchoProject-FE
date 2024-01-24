@@ -19,7 +19,9 @@ function ProductPage() {
         });
         if (response.data) {
           setProducts(response.data.data);
-          setTotalPages(response.data.totalPages); // 총 페이지 수 설정
+          // 전체 페이지 수 계산: 전체 상품 수 / 페이지당 상품 수
+          const totalItemsCount = response.data.totalCount;
+          setTotalPages(Math.ceil(totalItemsCount / itemsPerPage));
         }
       } catch (error) {
         console.error("Error fetching products", error);
