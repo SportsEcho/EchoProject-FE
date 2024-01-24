@@ -17,7 +17,7 @@ import AddHotdeal from "./components/Hotdeal/AddHotdeal";
 import HotdealDetail from "./components/Hotdeal/HotdealDetail";
 import HotdealList from "./components/Hotdeal/HotdealList";
 import CartPage from "./components/Cart/CartPage";
-import FootballGameDetails from './components/GameDetails/FootballGameDetails';
+import GameDetails from './components/GameDetails/GameDetails';
 import {AuthProvider} from './components/AuthContext';
 
 import KakaoRedirect from './components/OAuth/KakaoRedirect';
@@ -62,7 +62,7 @@ function App() {
               <Route path="/hotdeals/:hotdealId" element={<HotdealDetail/>}/>
               <Route path="/add-hotdeal" element={<AddHotdeal/>}/>
               <Route path="/cart" element={<CartPage/>}/>
-              <Route path="/games/:gameId" element={<FootballGameDetails/>}/>
+              <Route path="/games/:gameId" element={<GameDetails/>}/>
               <Route path="/order" element={<OrderPage />} />
               <Route path="/redirect/kakao" element={<KakaoRedirect/>}/>
               <Route path="/redirect/naver" element={<NaverRedirect/>}/>
