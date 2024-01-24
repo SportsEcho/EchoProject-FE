@@ -30,7 +30,7 @@ function BasketballSchedule() {
 
 
   const handleGameClick = (gameId) => {
-    navigate(`/basketball/games/${gameId}`);
+    navigate(`/games/${gameId}`);
   };
 
   return (
