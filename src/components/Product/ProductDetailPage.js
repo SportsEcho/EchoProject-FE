@@ -43,7 +43,7 @@ function ProductDetailPage() {
   if (!product) return <div>Loading...</div>;
 
   return (
-      <div>
+      <div className="product-detail">
         <h1>{product.title}</h1>
         <img src={product.imageUrlList[0]} alt={product.title} />
         <p>{product.content}</p>

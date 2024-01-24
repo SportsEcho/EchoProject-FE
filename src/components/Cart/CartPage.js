@@ -53,11 +53,17 @@ function CartPage() {
         <h1>장바구니</h1>
         {cartItems.map(item => (
             <div key={item.productId}>
-              <img src={item.imageUrlList[0]} alt={item.productName} style={{ width: '50px', height: '50px' }} />
+              {/* imageUrlList 배열이 존재하고 비어 있지 않은 경우에만 이미지를 표시 */}
+              {item.imageUrlList && item.imageUrlList.length > 0 && (
+                  <img
+                      src={item.imageUrlList[0]}
+                      alt={item.productName}
+                      style={{ width: '50px', height: '50px' }}
+                  />
+              )}
               <p>{item.productName}</p>
               <p>수량: {item.productsQuantity}</p>
               <p>가격: {item.price}원</p>
-              <p>총합: {totalPrice}원</p>
               <button onClick={() => handleDelete(item.productId)}>삭제하기</button>
             </div>
         ))}
