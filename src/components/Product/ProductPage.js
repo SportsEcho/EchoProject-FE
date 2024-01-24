@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/ProductPage.css';
+import { throttle } from 'lodash';
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -44,13 +45,13 @@ function ProductPage() {
     });
   }, [currentPage, fetchProducts]);
 
-  // 스크롤 이벤트 핸들러
-  const handleScroll = useCallback(() => {
+// 스크롤 이벤트 핸들러
+  const handleScroll = useCallback(throttle(() => {
     if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
       return;
     }
     setCurrentPage(prevPage => prevPage + 1);
-  }, [isLoading, hasMore]);
+  }, 200), [isLoading, hasMore]); //200ms 간격으로 이벤트를 처리
 
   useEffect(() => {
     // 스크롤 이벤트 리스너 추가
