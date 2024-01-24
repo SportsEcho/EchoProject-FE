@@ -28,7 +28,7 @@ function BaseballSchedule() {
   }, [selectedDate]);
   // 경기 클릭 핸들러
   const handleGameClick = (gameId) => {
-    navigate(`/baseball/games/${gameId}`);
+    navigate(`/games/${gameId}`);
   };
 
   return (
