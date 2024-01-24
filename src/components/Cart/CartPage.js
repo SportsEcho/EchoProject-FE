@@ -40,7 +40,9 @@ function CartPage() {
       alert('장바구니 삭제 중 오류가 발생했습니다.');
     }
   };
-
+  const handleGoToOrder = () => {
+    navigate('/order'); // 주문 페이지로 이동
+  };
   const totalPrice = cartItems.reduce((total, item) => total + (item.quantity * item.price), 0);
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
