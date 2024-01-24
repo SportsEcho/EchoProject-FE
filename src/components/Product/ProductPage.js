@@ -12,7 +12,7 @@ function ProductPage() {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
 
-  // `useCallback`에 의존성 추가: currentPage와 itemsPerPage
+  // 의존성 배열에서 `currentPage`를 제거합니다.
   const fetchProducts = useCallback(async (page) => {
     setIsLoading(true);
     try {
@@ -29,7 +29,6 @@ function ProductPage() {
         },
         headers
       });
-      // 데이터가 비어있으면 hasMore을 false로 설정
       const newProducts = response.data.data || [];
       if (newProducts.length < itemsPerPage) {
         setHasMore(false);
@@ -42,38 +41,30 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage]);
+  }, [itemsPerPage]); // `currentPage`를 제거했습니다.
 
   useEffect(() => {
     fetchProducts(currentPage).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
-      setHasMore(newProducts.length === itemsPerPage);
     });
   }, [currentPage, fetchProducts]);
-  // 스크롤 이벤트 핸들러
-  const handleScroll = useCallback(
-      throttle(() => {
-        if (
-            window.innerHeight + document.documentElement.scrollTop <
-            document.documentElement.offsetHeight ||
-            isLoading ||
-            !hasMore
-        ) {
-          return;
-        }
-        setCurrentPage(prevPage => prevPage + 1);
-      }, 200),
-      [isLoading, hasMore] // `isLoading`와 `hasMore`를 의존성 배열에 포함시킵니다.
-  );
+
+  // `handleScroll` 콜백을 `useEffect` 내부에서 정의합니다.
   useEffect(() => {
-    // 스크롤 이벤트 리스너 추가
-    window.addEventListener('scroll', handleScroll);
+    const throttledHandleScroll = throttle(() => {
+      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
+        return;
+      }
+      setCurrentPage(prevPage => prevPage + 1);
+    }, 200);
+
+    window.addEventListener('scroll', throttledHandleScroll);
+
     return () => {
-      // 컴포넌트 언마운트 시 스크롤 이벤트 리스너 제거
-      handleScroll.cancel(); // throttle을 취소하는 메소드 호출
-      window.removeEventListener('scroll', handleScroll);
+      throttledHandleScroll.cancel();
+      window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, [handleScroll]);
+  }, [isLoading, hasMore]); // 의존성 배열에서 `throttle` 함수를 제거하고 `isLoading`, `hasMore`를 추가했습니다.
 
   if (error) {
     return <div>{error}</div>;
