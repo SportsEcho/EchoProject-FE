@@ -19,9 +19,8 @@ function ProductPage() {
         });
         if (response.data) {
           setProducts(response.data.data);
-          // 전체 페이지 수 계산: 전체 상품 수 / 페이지당 상품 수
           const totalItemsCount = response.data.totalCount;
-          setTotalPages(Math.ceil(totalItemsCount / itemsPerPage));
+          setTotalPages(Math.ceil(totalItemsCount / itemsPerPage)); // 여기서 전체 페이지 수 계산
         }
       } catch (error) {
         console.error("Error fetching products", error);
@@ -30,6 +29,7 @@ function ProductPage() {
 
     fetchProducts();
   }, [currentPage]);
+
 
   if (!Array.isArray(products)) {
     return <div>Loading or error...</div>;
@@ -58,6 +58,7 @@ function ProductPage() {
   );
 }
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
+  // 페이지네이션 버튼 생성 로직
   return (
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNumber => (
