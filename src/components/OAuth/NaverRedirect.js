@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import {useAuth} from "../AuthContext";
 
 const NaverRedirect = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,14 +19,9 @@ const NaverRedirect = () => {
           const refreshToken = response.headers.refreshauthorization || response.headers.Refreshauthorization;
 
           // 로컬 스토리지에 토큰 저장
-          if (authToken) {
-            localStorage.setItem('authToken', authToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
+          if (authToken && refreshToken) {
+            login(authToken.split(' ')[1], refreshToken.split(' ')[1]); // 로그인 상태 업데이트
           }
-          if (refreshToken) {
-            localStorage.setItem('refreshToken', refreshToken.split(' ')[1]); // 'Bearer '을 제거하고 토큰만 저장
-          }
-
-          // 메인 페이지로 리디렉션
           navigate('/');
         }
       } catch (error) {
@@ -33,7 +30,7 @@ const NaverRedirect = () => {
     };
 
     fetchData();
-  }, [navigate]);
+  }, [navigate,login]);
 
   return <div>로그인 중입니다.</div>;
 };
