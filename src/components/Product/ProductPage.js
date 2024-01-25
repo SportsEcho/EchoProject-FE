@@ -12,8 +12,6 @@ function ProductPage() {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  // 정렬 관련 상태 삭제
-  // const [sortOrder, setSortOrder] = useState('');
 
   const fetchProducts = useCallback(async (page, keyword = '') => {
     setIsLoading(true);
@@ -21,7 +19,7 @@ function ProductPage() {
       const params = {
         page: page,
         size: itemsPerPage,
-        keyword: keyword, // 'keyword' 파라미터 사용
+        keyword: keyword
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
@@ -36,7 +34,7 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage, searchTerm]);
+  }, [itemsPerPage]); // searchTerm 의존성 제거
 
   useEffect(() => {
     fetchProducts(currentPage, searchTerm).then(newProducts => {
@@ -84,13 +82,6 @@ function ProductPage() {
             />
             <button onClick={() => fetchProducts(1, searchTerm)}>검색</button>
           </div>
-          {/*<div className="sort-container">*/}
-          {/*  <select onChange={(e) => setSortOrder(e.target.value)}>*/}
-          {/*    <option value="">정렬</option>*/}
-          {/*    <option value="price_high">가격 높은순</option>*/}
-          {/*    <option value="price_low">가격 낮은순</option>*/}
-          {/*  </select>*/}
-          {/*</div>*/}
         </div>
         <div className="product-list">
           {products.map(product => (
