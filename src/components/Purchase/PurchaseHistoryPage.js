@@ -29,19 +29,24 @@ function PurchaseHistoryPage() {
               <li key={purchase.id}>
                 <p>주문 번호: {purchase.id}</p>
                 <p>총 금액: {purchase.totalPrice}원</p>
-                {purchase.purchaseProducts && purchase.purchaseProducts.map(product => (
-                    <ul key={product.id}>
-                      <li>상품명: {product.title}</li>
-                      <li>수량: {product.productsQuantity}</li>
-                      <li>가격: {product.price}원</li>
+                {purchase.purchaseProductList && purchase.purchaseProductList.length > 0 ? (
+                    <ul>
+                      {purchase.purchaseProductList.map(product => (
+                          <li key={product.id}>
+                            <p>상품명: {product.title}</p>
+                            <p>수량: {product.productsQuantity}</p>
+                            <p>가격: {product.price}원</p>
+                          </li>
+                      ))}
                     </ul>
-                ))}
+                ) : (
+                    <p>주문된 상품이 없습니다.</p>
+                )}
               </li>
           ))}
         </ul>
       </div>
   );
 }
-
 
 export default PurchaseHistoryPage;
