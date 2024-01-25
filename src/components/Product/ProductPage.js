@@ -12,16 +12,17 @@ function ProductPage() {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
+  // 정렬 관련 상태 삭제
+  // const [sortOrder, setSortOrder] = useState('');
 
   const fetchProducts = useCallback(async (page, keyword = '', sortOrder = '') => {
     setIsLoading(true);
     try {
       const params = {
         page: page,
-        size: itemsPerPage,  // 'limit' 대신 'size'를 사용합니다
-        keyword: keyword,    // 'search' 대신 'keyword'를 사용합니다
-        sort: sortOrder
+        limit: itemsPerPage,
+        search: searchTerm,
+        // sort: sortOrder 제거
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
