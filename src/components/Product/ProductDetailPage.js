@@ -11,7 +11,7 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${productId}`);
-        setProduct(response.data.data); // 데이터 구조에 맞게 수정
+        setProduct(response.data); // 데이터 구조에 맞게 수정
       } catch (error) {
         console.error("Error fetching product", error);
       }

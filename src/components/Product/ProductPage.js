@@ -29,7 +29,7 @@ function ProductPage() {
         },
         headers
       });
-      const newProducts = response.data.data || [];
+      const newProducts = response.data || [];
       if (newProducts.length < itemsPerPage) {
         setHasMore(false);
       }
