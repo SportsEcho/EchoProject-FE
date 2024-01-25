@@ -29,8 +29,16 @@ function PurchaseHistoryPage() {
           {purchaseHistory.map(purchase => (
               <li key={purchase.id}>
                 <p>주문 번호: {purchase.id}</p>
-                <p>총 금액: {purchase.totalPrice}</p>
-                {/* 필요한 추가 정보 표시 */}
+                <p>총 금액: {purchase.totalPrice}원</p>
+                <ul>
+                  {purchase.purchaseProducts.map(product => (
+                      <li key={product.id}>
+                        <p>상품명: {product.title}</p>
+                        <p>수량: {product.productsQuantity}</p>
+                        <p>가격: {product.price}원</p>
+                      </li>
+                  ))}
+                </ul>
               </li>
           ))}
         </ul>
