@@ -92,3 +92,36 @@
   height: 100px;
   object-fit: cover; /* 이미지 비율 유지 */
 }
+.search-and-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-container,
+.sort-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container input,
+.sort-container select {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 10px; /* 모서리를 둥글게 */
+}
+
+.search-container button,
+.sort-container select {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-container button:hover,
+.sort-container select:hover {
+  background-color: #f0f0f0;
+}
