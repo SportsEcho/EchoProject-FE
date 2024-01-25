@@ -11,24 +11,19 @@ function ProductPage() {
   const [error, setError] = useState('');
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
 
-  // 의존성 배열에서 `currentPage`를 제거합니다.
-  const fetchProducts = useCallback(async (page) => {
+  const fetchProducts = useCallback(async (page, searchTerm = '', sortOrder = '') => {
     setIsLoading(true);
     try {
-      const headers = {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        'If-Modified-Since': '0'
+      const params = {
+        page: page,
+        limit: itemsPerPage,
+        search: searchTerm,
+        sort: sortOrder
       };
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, {
-        params: {
-          page: page,
-          limit: itemsPerPage
-        },
-        headers
-      });
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
       if (newProducts.length < itemsPerPage) {
         setHasMore(false);
@@ -41,15 +36,14 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage]); // `currentPage`를 제거했습니다.
+  }, [itemsPerPage]);
 
   useEffect(() => {
-    fetchProducts(currentPage).then(newProducts => {
+    fetchProducts(currentPage, searchTerm, sortOrder).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
     });
-  }, [currentPage, fetchProducts]);
+  }, [currentPage, searchTerm, sortOrder, fetchProducts]);
 
-  // `handleScroll` 콜백을 `useEffect` 내부에서 정의합니다.
   useEffect(() => {
     const throttledHandleScroll = throttle(() => {
       if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
@@ -64,7 +58,7 @@ function ProductPage() {
       throttledHandleScroll.cancel();
       window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, [isLoading, hasMore]); // 의존성 배열에서 `throttle` 함수를 제거하고 `isLoading`, `hasMore`를 추가했습니다.
+  }, [isLoading, hasMore]);
 
   if (error) {
     return <div>{error}</div>;
@@ -73,8 +67,23 @@ function ProductPage() {
   return (
       <div className="product-page">
         <h1>상품 목록</h1>
-        <div className="add-button-container">
-          <Link to="/add-product" className="btn btn-primary">상품 추가</Link>
+        <div className="search-and-sort-container">
+          <div className="search-container">
+            <input
+                type="text"
+                placeholder="상품 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button onClick={() => fetchProducts(1, searchTerm, sortOrder)}>검색</button>
+          </div>
+          <div className="sort-container">
+            <select onChange={(e) => setSortOrder(e.target.value)}>
+              <option value="">정렬</option>
+              <option value="price_high">가격 높은순</option>
+              <option value="price_low">가격 낮은순</option>
+            </select>
+          </div>
         </div>
         <div className="product-list">
           {products.map(product => (
