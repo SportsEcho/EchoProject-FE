@@ -20,8 +20,8 @@ function ProductPage() {
     try {
       const params = {
         page: page,
-        limit: itemsPerPage,
-        search: keyword,
+        size: itemsPerPage,
+        keyword: keyword, // 'keyword' 파라미터 사용
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
