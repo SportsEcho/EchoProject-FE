@@ -18,7 +18,8 @@ function CartPage() {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/carts`, {
           headers: { Authorization: `Bearer ${authToken}` }
         });
-        setCartItems(response.data.data); // 응답 구조에 맞게 수정
+        // API 응답이 배열인지 확인하고, 그렇지 않으면 빈 배열을 설정
+        setCartItems(Array.isArray(response.data.data) ? response.data.data : []);
       } catch (error) {
         console.error("장바구니 정보 조회 중 오류 발생: ", error);
       }
@@ -26,6 +27,7 @@ function CartPage() {
 
     fetchCartItems();
   }, []);
+
 
   const handleDelete = async (productId) => {
     try {
@@ -43,7 +45,9 @@ function CartPage() {
   const handleGoToOrder = () => {
     navigate('/order'); // 주문 페이지로 이동
   };
-  const totalPrice = cartItems.reduce((total, item) => total + (item.quantity * item.price), 0);
+  const totalPrice = cartItems.length > 0
+      ? cartItems.reduce((total, item) => total + (item.quantity * item.price), 0)
+      : 0;
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
 
