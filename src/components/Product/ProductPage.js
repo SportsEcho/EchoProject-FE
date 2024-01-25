@@ -34,11 +34,15 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage]); // searchTerm 의존성 제거
+  }, [itemsPerPage]);
 
   useEffect(() => {
     fetchProducts(currentPage, searchTerm).then(newProducts => {
-      setProducts(prevProducts => [...prevProducts, ...newProducts]);
+      if (currentPage === 1) {
+        setProducts(newProducts);
+      } else {
+        setProducts(prevProducts => [...prevProducts, ...newProducts]);
+      }
     });
   }, [currentPage, searchTerm, fetchProducts]);
 
@@ -60,9 +64,16 @@ function ProductPage() {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
+      setCurrentPage(1); // 검색 시 페이지를 1로 재설정
       fetchProducts(1, searchTerm);
     }
   };
+
+  const handleSearchClick = () => {
+    setCurrentPage(1); // 검색 버튼 클릭 시 페이지를 1로 재설정
+    fetchProducts(1, searchTerm);
+  };
+
 
   if (error) {
     return <div>{error}</div>;
@@ -80,7 +91,7 @@ function ProductPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
             />
-            <button onClick={() => fetchProducts(1, searchTerm)}>검색</button>
+            <button onClick={handleSearchClick}>검색</button>
           </div>
         </div>
         <div className="product-list">
