@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import '../assets/styles/login.css';
-import naverIcon from '../assets/images/btnG_아이콘원형.png';
 import kakaoIcon from '../assets/images/kakao원형.png';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import {useNavigate} from 'react-router-dom';
+import {useAuth} from './AuthContext';
 
 function Login() {
   const { login } = useAuth();
@@ -63,11 +62,11 @@ function Login() {
                 {/*  </a>*/}
                 {/*</div>*/}
                 {/* Naver 로그인 링크 */}
-                <div className="mb-2">
-                  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/naver&response_type=code`}>
-                    <img src={naverIcon} className="login-icon" alt="Naver Login" />
-                  </a>
-                </div>
+                {/*<div className="mb-2">*/}
+                {/*  <a href={`https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.REACT_APP_NAVER_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/naver&response_type=code`}>*/}
+                {/*    <img src={naverIcon} className="login-icon" alt="Naver Login" />*/}
+                {/*  </a>*/}
+                {/*</div>*/}
                 {/* Kakao 로그인 링크 */}
                 <div className="mb-2">
                   <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/kakao&response_type=code`}>
