@@ -11,7 +11,7 @@ function CartPage() {
       const authToken = localStorage.getItem('authToken');
       if (!authToken) {
         alert('로그인이 필요합니다.');
-        navigate('/login'); // 로그인 페이지로 이동
+        navigate('/login');
         return;
       }
 
@@ -28,21 +28,17 @@ function CartPage() {
     fetchCartItems();
   }, [navigate]);
 
-
   const handleDelete = async (productId) => {
+    const authToken = localStorage.getItem('authToken');
     try {
-      const authToken = localStorage.getItem('authToken');
       const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${productId}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
 
-      // 응답을 확인하여 성공적으로 삭제되었는지 확인
-      if (response.status === 200) {
-        // 삭제된 상품을 제외하고 상태 업데이트
+      if (response.status === 204) { // 상태 코드 204가 반환되면 성공
         setCartItems(cartItems.filter(item => item.id !== productId));
         alert('상품이 장바구니에서 삭제되었습니다.');
       } else {
-        // 서버 응답이 성공적이지 않은 경우
         alert('상품 삭제에 실패했습니다.');
       }
     } catch (error) {
@@ -50,9 +46,25 @@ function CartPage() {
       alert('장바구니 삭제 중 오류가 발생했습니다.');
     }
   };
-  const handleGoToOrder = () => {
-    navigate('/order'); // 주문 페이지로 이동
+
+  const handleDeleteAll = async () => {
+    const authToken = localStorage.getItem('authToken');
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts`, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      setCartItems([]);
+      alert('장바구니가 비워졌습니다.');
+    } catch (error) {
+      console.error("전체 장바구니 삭제 중 오류 발생: ", error);
+      alert('장바구니 전체 삭제 중 오류가 발생했습니다.');
+    }
   };
+
+  const handleGoToOrder = () => {
+    navigate('/order');
+  };
+
   const totalPrice = cartItems.reduce((total, item) => {
     const quantity = Number(item.productsQuantity) || 0;
     const price = Number(item.price) || 0;
@@ -75,6 +87,7 @@ function CartPage() {
               <button onClick={() => handleDelete(item.id)}>삭제하기</button>
             </div>
         ))}
+        <button onClick={handleDeleteAll}>장바구니 비우기</button>
         <p>총합: {totalPrice}원</p>
         <button onClick={handleGoToOrder}>구매하기</button>
       </div>
