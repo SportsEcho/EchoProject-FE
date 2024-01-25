@@ -42,7 +42,7 @@ function CartPage() {
       });
 
       if (response.status === 204) { // 상태 코드 204가 반환되면 성공
-        setCartItems(cartItems.filter(item => item.cartId !== cartId));
+        setCartItems(cartItems.filter(item => item.id !== cartId));
         alert('상품이 장바구니에서 삭제되었습니다.');
       } else {
         alert('상품 삭제에 실패했습니다.');
@@ -100,7 +100,7 @@ function CartPage() {
               <p>{item.title}</p>
               <p>수량: {item.productsQuantity}</p>
               <p>가격: {item.price}원</p>
-              <button onClick={() => handleDelete(item.cartId)}>삭제하기</button>
+              <button onClick={() => handleDelete(item.id)}>삭제하기</button>
             </div>
         ))}
         <button onClick={handleDeleteAll}>장바구니 비우기</button>
