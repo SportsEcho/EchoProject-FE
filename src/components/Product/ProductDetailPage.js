@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../../assets/styles/ProductPage.css';
 
 function ProductDetailPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -21,13 +23,19 @@ function ProductDetailPage() {
   }, [productId]);
 
   const handleAddToCart = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      alert('로그인이 필요합니다.');
+      navigate('/login'); // 로그인 페이지로 이동
+      return;
+    }
+
     if (!product) {
       alert('상품 정보를 불러오는 중입니다.');
       return;
     }
 
     try {
-      const authToken = localStorage.getItem('authToken');
       await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${product.id}`,
           { productsQuantity: 1 },
@@ -41,6 +49,7 @@ function ProductDetailPage() {
   };
 
   if (!product) return <div>Loading...</div>;
+
 
   return (
       <div className="product-detail">
