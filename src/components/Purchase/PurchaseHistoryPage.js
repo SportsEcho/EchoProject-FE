@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useAuth } from '../AuthContext';
-
 function PurchaseHistoryPage() {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const { authToken } = useAuth();
@@ -13,9 +9,9 @@ function PurchaseHistoryPage() {
           headers: { Authorization: `Bearer ${authToken}` }
         });
         setPurchaseHistory(response.data);
+        console.log(response.data); // 디버깅을 위한 로그
       } catch (error) {
         console.error("Error fetching purchase history", error);
-        // 오류 처리
       }
     };
 
@@ -30,20 +26,19 @@ function PurchaseHistoryPage() {
               <li key={purchase.id}>
                 <p>주문 번호: {purchase.id}</p>
                 <p>총 금액: {purchase.totalPrice}원</p>
-                <ul>
-                  {purchase.purchaseProducts.map(product => (
-                      <li key={product.id}>
-                        <p>상품명: {product.title}</p>
-                        <p>수량: {product.productsQuantity}</p>
-                        <p>가격: {product.price}원</p>
-                      </li>
-                  ))}
-                </ul>
+                {purchase.purchaseProducts && purchase.purchaseProducts.map(product => (
+                    <ul key={product.id}>
+                      <li>상품명: {product.title}</li>
+                      <li>수량: {product.productsQuantity}</li>
+                      <li>가격: {product.price}원</li>
+                    </ul>
+                ))}
               </li>
           ))}
         </ul>
       </div>
   );
 }
+
 
 export default PurchaseHistoryPage;
