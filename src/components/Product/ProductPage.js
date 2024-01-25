@@ -15,14 +15,13 @@ function ProductPage() {
   // 정렬 관련 상태 삭제
   // const [sortOrder, setSortOrder] = useState('');
 
-  const fetchProducts = useCallback(async (page, keyword = '', sortOrder = '') => {
+  const fetchProducts = useCallback(async (page, keyword = '') => {
     setIsLoading(true);
     try {
       const params = {
         page: page,
         limit: itemsPerPage,
-        search: searchTerm,
-        // sort: sortOrder 제거
+        search: keyword,
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
@@ -37,7 +36,7 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage]);
+  }, [itemsPerPage, searchTerm]);
 
   useEffect(() => {
     fetchProducts(currentPage, searchTerm).then(newProducts => {
