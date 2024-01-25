@@ -87,3 +87,8 @@
   background-color: #336699;
   color: white;
 }
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* 이미지 비율 유지 */
+}
