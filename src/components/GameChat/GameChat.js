@@ -4,7 +4,7 @@ import $ from 'jquery';
 import '../../assets/styles/GameChat.css';
 
 const stompClient = new StompJs.Client({
-  brokerURL: 'ws://13.125.46.61:8080/websocket',
+  brokerURL: `${process.env.REACT_APP_API_WebSoket_URL}/websocket`,
 });
 
 function GameChat(props) {
