@@ -29,6 +29,7 @@ function MainPage({ selectedDate }) {
   return (
       <div>
         <h1>경기 일정</h1>
+        <h3>(경기를 클릭시 실시간 채팅으로 이동!!)</h3>
         <FootballSchedule games={footballGames} selectedDate={selectedDate.toISOString().split('T')[0]} />
         <BasketballSchedule games={basketballGames} selectedDate={selectedDate.toISOString().split('T')[0]} />
         <BaseballSchedule games={baseballGames} selectedDate={selectedDate.toISOString().split('T')[0]} />
