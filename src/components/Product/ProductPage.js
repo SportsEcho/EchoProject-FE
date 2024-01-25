@@ -40,10 +40,10 @@ function ProductPage() {
   }, [itemsPerPage]);
 
   useEffect(() => {
-    fetchProducts(currentPage, searchTerm, sortOrder).then(newProducts => {
+    fetchProducts(currentPage, searchTerm).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
     });
-  }, [currentPage, searchTerm, sortOrder, fetchProducts]);
+  }, [currentPage, searchTerm, fetchProducts]);
 
   useEffect(() => {
     const throttledHandleScroll = throttle(() => {
@@ -63,7 +63,7 @@ function ProductPage() {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
-      fetchProducts(1, searchTerm, sortOrder);
+      fetchProducts(1, searchTerm);
     }
   };
 
@@ -83,7 +83,7 @@ function ProductPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
             />
-            <button onClick={() => fetchProducts(1, searchTerm, sortOrder)}>검색</button>
+            <button onClick={() => fetchProducts(1, searchTerm)}>검색</button>
           </div>
           {/*<div className="sort-container">*/}
           {/*  <select onChange={(e) => setSortOrder(e.target.value)}>*/}
