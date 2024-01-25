@@ -19,7 +19,7 @@ function CartPage() {
           headers: { Authorization: `Bearer ${authToken}` }
         });
         // API 응답이 배열인지 확인하고, 그렇지 않으면 빈 배열을 설정
-        setCartItems(Array.isArray(response.data.data) ? response.data.data : []);
+        setCartItems(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("장바구니 정보 조회 중 오류 발생: ", error);
       }
