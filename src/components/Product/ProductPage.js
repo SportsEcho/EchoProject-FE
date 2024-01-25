@@ -12,16 +12,14 @@ function ProductPage() {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
 
-  const fetchProducts = useCallback(async (page, searchTerm = '', sortOrder = '') => {
+  const fetchProducts = useCallback(async (page, keyword = '') => {
     setIsLoading(true);
     try {
       const params = {
         page: page,
-        limit: itemsPerPage,
-        search: searchTerm,
-        sort: sortOrder
+        size: itemsPerPage,
+        keyword: keyword
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
       const newProducts = response.data || [];
@@ -36,13 +34,13 @@ function ProductPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [itemsPerPage]);
+  }, [itemsPerPage]); // searchTerm 의존성 제거
 
   useEffect(() => {
-    fetchProducts(currentPage, searchTerm, sortOrder).then(newProducts => {
+    fetchProducts(currentPage, searchTerm).then(newProducts => {
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
     });
-  }, [currentPage, searchTerm, sortOrder, fetchProducts]);
+  }, [currentPage, searchTerm, fetchProducts]);
 
   useEffect(() => {
     const throttledHandleScroll = throttle(() => {
@@ -60,6 +58,12 @@ function ProductPage() {
     };
   }, [isLoading, hasMore]);
 
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      fetchProducts(1, searchTerm);
+    }
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -74,15 +78,9 @@ function ProductPage() {
                 placeholder="상품 검색..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
             />
-            <button onClick={() => fetchProducts(1, searchTerm, sortOrder)}>검색</button>
-          </div>
-          <div className="sort-container">
-            <select onChange={(e) => setSortOrder(e.target.value)}>
-              <option value="">정렬</option>
-              <option value="price_high">가격 높은순</option>
-              <option value="price_low">가격 낮은순</option>
-            </select>
+            <button onClick={() => fetchProducts(1, searchTerm)}>검색</button>
           </div>
         </div>
         <div className="product-list">
