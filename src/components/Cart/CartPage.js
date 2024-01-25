@@ -32,11 +32,19 @@ function CartPage() {
   const handleDelete = async (productId) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${productId}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts/products/${productId}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
-      setCartItems(cartItems.filter(item => item.id !== productId)); // 'id'로 변경
-      alert('상품이 장바구니에서 삭제되었습니다.');
+
+      // 응답을 확인하여 성공적으로 삭제되었는지 확인
+      if (response.status === 200) {
+        // 삭제된 상품을 제외하고 상태 업데이트
+        setCartItems(cartItems.filter(item => item.id !== productId));
+        alert('상품이 장바구니에서 삭제되었습니다.');
+      } else {
+        // 서버 응답이 성공적이지 않은 경우
+        alert('상품 삭제에 실패했습니다.');
+      }
     } catch (error) {
       console.error("장바구니 삭제 중 오류 발생: ", error);
       alert('장바구니 삭제 중 오류가 발생했습니다.');
@@ -45,9 +53,11 @@ function CartPage() {
   const handleGoToOrder = () => {
     navigate('/order'); // 주문 페이지로 이동
   };
-  const totalPrice = cartItems.length > 0
-      ? cartItems.reduce((total, item) => total + (item.quantity * item.price), 0)
-      : 0;
+  const totalPrice = cartItems.reduce((total, item) => {
+    const quantity = Number(item.quantity) || 0; // 유효하지 않은 값이면 0으로 대체
+    const price = Number(item.price) || 0; // 유효하지 않은 값이면 0으로 대체
+    return total + (quantity * price);
+  }, 0);
 
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
 
