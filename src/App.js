@@ -23,6 +23,7 @@ import {AuthProvider} from './components/AuthContext';
 import KakaoRedirect from './components/OAuth/KakaoRedirect';
 import NaverRedirect from './components/OAuth/NaverRedirect';
 import OrderPage from "./components/Purchase/OrderPage";
+import PurchaseHistoryPage from "./components/Purchase/PurchaseHistoryPage";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
