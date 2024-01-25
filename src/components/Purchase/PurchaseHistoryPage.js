@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../AuthContext';
 function PurchaseHistoryPage() {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const { authToken } = useAuth();
