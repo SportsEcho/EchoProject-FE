@@ -8,25 +8,25 @@ function CartPage() {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      try {
-        const authToken = localStorage.getItem('authToken');
-        if (!authToken) {
-          alert('로그인이 필요합니다.');
-          return;
-        }
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        alert('로그인이 필요합니다.');
+        navigate('/login'); // 로그인 페이지로 이동
+        return;
+      }
 
+      try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/carts`, {
           headers: { Authorization: `Bearer ${authToken}` }
         });
-        // API 응답이 배열인지 확인하고, 그렇지 않으면 빈 배열을 설정
-        setCartItems(Array.isArray(response.data) ? response.data : []);
+        setCartItems(response.data);
       } catch (error) {
         console.error("장바구니 정보 조회 중 오류 발생: ", error);
       }
     };
 
     fetchCartItems();
-  }, []);
+  }, [navigate]);
 
 
   const handleDelete = async (productId) => {
@@ -54,8 +54,8 @@ function CartPage() {
     navigate('/order'); // 주문 페이지로 이동
   };
   const totalPrice = cartItems.reduce((total, item) => {
-    const quantity = Number(item.quantity) || 0; // 유효하지 않은 값이면 0으로 대체
-    const price = Number(item.price) || 0; // 유효하지 않은 값이면 0으로 대체
+    const quantity = Number(item.productsQuantity) || 0;
+    const price = Number(item.price) || 0;
     return total + (quantity * price);
   }, 0);
 
@@ -70,9 +70,9 @@ function CartPage() {
                   <img src={item.imageUrlList[0]} alt={item.title} style={{ width: '50px', height: '50px' }} />
               )}
               <p>{item.title}</p>
-              <p>수량: {item.quantity}</p>
+              <p>수량: {item.productsQuantity}</p>
               <p>가격: {item.price}원</p>
-              <button onClick={() => handleDelete(item.id)}>삭제하기</button> {/* 'item.id' 사용 */}
+              <button onClick={() => handleDelete(item.id)}>삭제하기</button>
             </div>
         ))}
         <p>총합: {totalPrice}원</p>
