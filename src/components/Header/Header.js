@@ -10,6 +10,10 @@ function Header() {
   const navigate = useNavigate();
   const { authToken, logout } = useAuth();
 
+  const handlePurchaseHistoryClick = () => {
+    navigate('/purchase-history'); // 구매 내역 페이지로 이동
+  };
+
   const handleLogoutClick = async () => {
     try {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/members/logout`, {}, {
@@ -43,7 +47,10 @@ function Header() {
         <div id="user-profile">
           <img src={shoppingCart} alt="Shopping Cart" onClick={handleCartClick} />
           {authToken ? (
-              <button onClick={handleLogoutClick}>로그아웃</button>
+              <>
+                <button onClick={handlePurchaseHistoryClick}>구매내역</button>
+                <button onClick={handleLogoutClick}>로그아웃</button>
+              </>
           ) : (
               <Link to="/login">로그인</Link>
           )}
