@@ -12,6 +12,7 @@ function OrderPage() {
       const authToken = localStorage.getItem('authToken');
       if (!authToken) {
         alert('로그인이 필요합니다.');
+        navigate('/login');
         return;
       }
 
