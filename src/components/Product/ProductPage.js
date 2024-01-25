@@ -14,13 +14,13 @@ function ProductPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('');
 
-  const fetchProducts = useCallback(async (page, searchTerm = '', sortOrder = '') => {
+  const fetchProducts = useCallback(async (page, keyword = '', sortOrder = '') => {
     setIsLoading(true);
     try {
       const params = {
         page: page,
-        limit: itemsPerPage,
-        search: searchTerm,
+        size: itemsPerPage,  // 'limit' 대신 'size'를 사용합니다
+        keyword: keyword,    // 'search' 대신 'keyword'를 사용합니다
         sort: sortOrder
       };
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`, { params });
@@ -60,6 +60,12 @@ function ProductPage() {
     };
   }, [isLoading, hasMore]);
 
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      fetchProducts(1, searchTerm, sortOrder);
+    }
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -74,16 +80,17 @@ function ProductPage() {
                 placeholder="상품 검색..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
             />
             <button onClick={() => fetchProducts(1, searchTerm, sortOrder)}>검색</button>
           </div>
-          <div className="sort-container">
-            <select onChange={(e) => setSortOrder(e.target.value)}>
-              <option value="">정렬</option>
-              <option value="price_high">가격 높은순</option>
-              <option value="price_low">가격 낮은순</option>
-            </select>
-          </div>
+          {/*<div className="sort-container">*/}
+          {/*  <select onChange={(e) => setSortOrder(e.target.value)}>*/}
+          {/*    <option value="">정렬</option>*/}
+          {/*    <option value="price_high">가격 높은순</option>*/}
+          {/*    <option value="price_low">가격 낮은순</option>*/}
+          {/*  </select>*/}
+          {/*</div>*/}
         </div>
         <div className="product-list">
           {products.map(product => (
