@@ -11,8 +11,8 @@ function HotdealDetail() {
     const fetchHotdeal = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}`);
-        if (response.data && response.data.data) {
-          setHotdeal(response.data.data);
+        if (response.data && response.data) {
+          setHotdeal(response.data);
         } else {
           console.error("Invalid response structure:", response);
         }
