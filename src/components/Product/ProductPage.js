@@ -47,33 +47,37 @@ function ProductPage() {
   }, [currentPage, searchTerm, fetchProducts]);
 
   useEffect(() => {
-    const throttledHandleScroll = throttle(() => {
-      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoading || !hasMore) {
-        return;
+    const checkScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !isLoading && hasMore) {
+        setCurrentPage(prevPage => prevPage + 1);
       }
-      setCurrentPage(prevPage => prevPage + 1);
-    }, 200);
+    };
+
+    const throttledHandleScroll = throttle(checkScroll, 200);
+    const throttledHandleResize = throttle(checkScroll, 200);
 
     window.addEventListener('scroll', throttledHandleScroll);
+    window.addEventListener('resize', throttledHandleResize);
 
     return () => {
       throttledHandleScroll.cancel();
+      throttledHandleResize.cancel();
       window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener('resize', throttledHandleResize);
     };
   }, [isLoading, hasMore]);
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
-      setCurrentPage(1); // 검색 시 페이지를 1로 재설정
+      setCurrentPage(1);
       fetchProducts(1, searchTerm);
     }
   };
 
   const handleSearchClick = () => {
-    setCurrentPage(1); // 검색 버튼 클릭 시 페이지를 1로 재설정
+    setCurrentPage(1);
     fetchProducts(1, searchTerm);
   };
-
 
   if (error) {
     return <div>{error}</div>;
