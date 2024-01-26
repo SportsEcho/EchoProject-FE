@@ -37,14 +37,15 @@ function ProductPage() {
   }, [itemsPerPage]);
 
   useEffect(() => {
-    fetchProducts(currentPage, searchTerm).then(newProducts => {
+    // 페이지가 변경될 때만 상품을 불러오도록 수정
+    fetchProducts(currentPage, '').then(newProducts => {
       if (currentPage === 1) {
         setProducts(newProducts);
       } else {
         setProducts(prevProducts => [...prevProducts, ...newProducts]);
       }
     });
-  }, [currentPage, searchTerm, fetchProducts]);
+  }, [currentPage, fetchProducts]);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -67,16 +68,19 @@ function ProductPage() {
     };
   }, [isLoading, hasMore]);
 
+  const executeSearch = () => {
+    setCurrentPage(1);
+    fetchProducts(1, searchTerm);
+  };
+
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
-      setCurrentPage(1);
-      fetchProducts(1, searchTerm);
+      executeSearch();
     }
   };
 
   const handleSearchClick = () => {
-    setCurrentPage(1);
-    fetchProducts(1, searchTerm);
+    executeSearch();
   };
 
   if (error) {
