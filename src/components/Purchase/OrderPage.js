@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
@@ -8,7 +9,16 @@ function OrderPage() {
   const [phone, setPhone] = useState('');
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    // Portal을 위한 div 요소를 생성하고 body에 추가합니다.
+    const portalDiv = document.createElement('div');
+    portalDiv.id = 'portal';
+    document.body.appendChild(portalDiv);
+    return () => {
+      // 컴포넌트 언마운트 시 portal div 요소를 제거합니다.
+      document.body.removeChild(portalDiv);
+    };
+  }, []);
   // 구매 처리 함수
   const handlePurchase = async () => {
     try {
@@ -65,13 +75,14 @@ function OrderPage() {
             />
             <button type="button" onClick={() => setIsPostcodeOpen(true)}>주소 검색</button>
           </div>
-          {isPostcodeOpen && (
+          {isPostcodeOpen && ReactDOM.createPortal(
               <DaumPostcode
                   key={new Date().getTime()}
                   onComplete={handleAddress}
                   onClose={() => setIsPostcodeOpen(false)}
                   style={{ display: 'block', position: 'absolute', top: '100px', zIndex: '100' }}
-              />
+              />,
+              document.getElementById('portal')
           )}
           <div>
             <label htmlFor="phone">전화번호:</label>
