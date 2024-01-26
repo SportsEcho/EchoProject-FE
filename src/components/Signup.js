@@ -11,13 +11,16 @@ function Signup() {
   const handleBackToLogin = () => {
     navigate('/login');
   };
-  const validateInput = (email, password, memberName) => {
+  const validateInput = (email, password, checkPassword, memberName) => {
     const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~@#$%^&+=!]).{8,15}$/;
-    const nameRegex = /^[a-zA-Z0-9]+$/;
+    const nameRegex = /^[a-zA-Z0-9가-힣]+$/;
 
     if (!emailRegex.test(email)) {
       return "유효하지 않은 이메일 형식입니다. (예: abc123@def.com)";
+    }
+    if (password !== checkPassword) {
+      return "비밀번호가 일치하지 않습니다."
     }
     if (!passwordRegex.test(password)) {
       return "비밀번호는 8~15자리, 대소문자, 숫자, 특수문자를 포함해야 합니다. (예: Abc123!!)";
@@ -35,8 +38,9 @@ function Signup() {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const memberName = event.target.memberName.value;
+    const checkPassword = event.target.checkPassword.value;
 
-    const validationError = validateInput(email, password, memberName);
+    const validationError = validateInput(email, password, checkPassword, memberName);
     if (validationError) {
       setErrorMessage(validationError);
       return;
@@ -103,11 +107,14 @@ function Signup() {
                 </div>
                 <div className="form-group">
                   <input type="password" className="form-control" name="password" placeholder="비밀번호" required />
+                </div>
+                <div className="form-group">
+                  <input type="password" className="form-control" name="checkPassword" placeholder="비밀번호 확인" required />
                   <h5>영문 대/소문자, 숫자, 특수문자 포함 8-15자!!(ex:Abc123!!)</h5>
                 </div>
                 <div className="form-group">
                   <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required />
-                  <h5>영어와 숫자만 가능합니다!(ex:loveyou)</h5>
+                  <h5>한국어, 영어와 숫자만 가능합니다!(ex:loveyou, 에코12)</h5>
                 </div>
                 {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
                 <button type="submit" className="btn btn-primary btn-block">가입하기</button>
