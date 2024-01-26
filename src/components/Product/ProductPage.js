@@ -25,7 +25,9 @@ function ProductPage() {
       const newProducts = response.data || [];
       if (newProducts.length < itemsPerPage) {
         setHasMore(false);
-      }
+      } else {
+      setHasMore(true); // 데이터가 더 있는 경우 hasMore 업데이트
+    }
       return newProducts;
     } catch (error) {
       setError('상품을 불러오는 데 실패했습니다.');
@@ -37,15 +39,11 @@ function ProductPage() {
   }, [itemsPerPage]);
 
   useEffect(() => {
-    // 페이지가 변경될 때만 상품을 불러오도록 수정
-    fetchProducts(currentPage, '').then(newProducts => {
-      if (currentPage === 1) {
-        setProducts(newProducts);
-      } else {
-        setProducts(prevProducts => [...prevProducts, ...newProducts]);
-      }
+    // 페이지 또는 검색어가 변경될 때마다 상품을 불러오도록 수정
+    fetchProducts(currentPage, searchTerm).then(newProducts => {
+      setProducts(currentPage === 1 ? newProducts : prevProducts => [...prevProducts, ...newProducts]);
     });
-  }, [currentPage, fetchProducts]);
+  }, [currentPage, searchTerm, fetchProducts]);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -69,10 +67,11 @@ function ProductPage() {
   }, [isLoading, hasMore]);
 
   const executeSearch = () => {
-    setCurrentPage(1);
-    fetchProducts(1, searchTerm);
+    setCurrentPage(1); // 검색 실행 시 페이지를 1로 재설정
+    fetchProducts(1, searchTerm).then(newProducts => {
+      setProducts(newProducts); // 검색 결과로 상태 업데이트
+    });
   };
-
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
       executeSearch();
