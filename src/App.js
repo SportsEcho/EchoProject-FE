@@ -24,6 +24,7 @@ import KakaoRedirect from './components/OAuth/KakaoRedirect';
 import NaverRedirect from './components/OAuth/NaverRedirect';
 import OrderPage from "./components/Purchase/OrderPage";
 import PurchaseHistoryPage from "./components/Purchase/PurchaseHistoryPage";
+import OrderHotdeal from "./components/Purchase/OrderHotdeal";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -68,6 +69,7 @@ function App() {
               <Route path="/redirect/kakao" element={<KakaoRedirect/>}/>
               <Route path="/redirect/naver" element={<NaverRedirect/>}/>
               <Route path="/purchase-history" element={<PurchaseHistoryPage />} />
+              <Route path="/order-hotdeal/:id" element={<OrderHotdeal />} />
             </Routes>
             <Footer/>
           </div>
