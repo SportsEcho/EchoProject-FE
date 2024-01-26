@@ -25,9 +25,6 @@ function HotdealList() {
   return (
       <div>
         <h1>핫딜 목록</h1>
-        <div className="add-button-container">
-          <Link to="/add-hotdeal" className="btn btn-primary">핫딜 추가</Link>
-        </div>
         <ul>
           {hotdeals.map(hotdeal => (
               <li key={hotdeal.id}>
