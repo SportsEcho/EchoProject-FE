@@ -27,7 +27,7 @@ function HotdealDetail() {
   const handlePurchase = () => {
     const authToken = localStorage.getItem('authToken'); // 토큰 가져오기
     if (authToken) {
-      navigate('/order'); // 로그인 상태이면 OrderPage로 이동
+      navigate(`/order-hotdeal/${hotdealId}`); // 로그인 상태이면 OrderHotdeal 페이지로 이동
     } else {
       alert('로그인이 필요합니다.'); // 로그인 상태가 아니면 알림 표시
     }
@@ -46,5 +46,4 @@ function HotdealDetail() {
       </div>
   );
 }
-
 export default HotdealDetail;
