@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 function OrderPage() {
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
