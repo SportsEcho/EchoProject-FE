@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 function Signup() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
   const handleBackToLogin = () => {
     navigate('/login');
   };
@@ -70,6 +70,9 @@ function Signup() {
       setErrorMessage(errorResponse);
     }
   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
       <div className="gradient-custom d-flex vh-100 justify-content-center align-items-center">
@@ -102,19 +105,23 @@ function Signup() {
 
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <input type="email" className="form-control" name="email" placeholder="이메일 주소" required />
+                  <input type="email" className="form-control" name="email" placeholder="이메일 주소" required/>
                   <h5>이메일 양식을 지켜주세요 그렇지 않으면 오류가 발생합니다!(ex:abc123@def.com)</h5>
                 </div>
                 <div className="form-group">
-                  <input type="password" className="form-control" name="password" placeholder="비밀번호" required />
+                  <input type={showPassword ? "text" : "password"} className="form-control" name="password"
+                         placeholder="비밀번호" required/>
+                  <button type="button" onClick={togglePasswordVisibility}>
+                    {showPassword ? "숨기기" : "보이기"}
+                  </button>
                 </div>
                 <div className="form-group">
-                  <input type="password" className="form-control" name="checkPassword" placeholder="비밀번호 확인" required />
-                  <h5>영문 대/소문자, 숫자, 특수문자 포함 8-15자!!(ex:Abc123!!)</h5>
+                  <input type={showPassword ? "text" : "password"} className="form-control" name="checkPassword"
+                         placeholder="비밀번호 확인" required/>
                 </div>
                 <div className="form-group">
-                  <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required />
-                  <h5>한국어, 영어와 숫자만 가능합니다!(ex:loveyou, 에코12)</h5>
+                  <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required/>
+                  <h5>영어와 숫자만 가능합니다!(ex:loveyou)</h5>
                 </div>
                 {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
                 <button type="submit" className="btn btn-primary btn-block">가입하기</button>
