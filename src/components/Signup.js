@@ -118,6 +118,7 @@ function Signup() {
                 <div className="form-group">
                   <input type={showPassword ? "text" : "password"} className="form-control" name="checkPassword"
                          placeholder="비밀번호 확인" required/>
+                  <h5>비밀번호는 8~15자리, 대소문자, 숫자, 특수문자를 포함해야 합니다. (예: Abc123!!)</h5>
                 </div>
                 <div className="form-group">
                   <input type="text" className="form-control" name="memberName" placeholder="멤버 이름" required/>
