@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import '../../assets/styles/ProductPage.css';
 function HotdealDetail() {
   const { hotdealId } = useParams();
   const [hotdeal, setHotdeal] = useState(null);
