@@ -67,6 +67,7 @@ function OrderPage() {
           </div>
           {isPostcodeOpen && (
               <DaumPostcode
+                  key={new Date().getTime()}
                   onComplete={handleAddress}
                   onClose={() => setIsPostcodeOpen(false)}
                   style={{ display: 'block', position: 'absolute', top: '100px', zIndex: '100' }}
