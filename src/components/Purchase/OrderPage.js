@@ -29,8 +29,14 @@ function OrderPage() {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/purchase`, purchaseData, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
+
+      // 구매 완료 후 장바구니 비우기
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/carts`, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+
       alert('주문이 완료되었습니다.');
-      navigate('/');
+      navigate('/'); // 홈페이지 혹은 다른 페이지로 이동
     } catch (error) {
       console.error("주문 처리 중 오류 발생: ", error);
       alert('주문 처리 중 오류가 발생했습니다.');
