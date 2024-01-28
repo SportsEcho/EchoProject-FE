@@ -97,8 +97,8 @@ function Signup() {
                 {/*</div>*/}
                 {/* Kakao 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_API_BASE_URL}/api/members/kakao/callback&response_type=code`}>
-                    <img src={kakaoIcon} className="login-icon" alt="Kakao Login" />
+                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/kakao&response_type=code`}>
+                    <img src={kakaoIcon} className="login-icon" alt="Kakao Login"/>
                   </a>
                 </div>
               </div>
