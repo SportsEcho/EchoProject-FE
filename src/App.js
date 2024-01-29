@@ -69,7 +69,7 @@ function App() {
               <Route path="/redirect/kakao" element={<KakaoRedirect/>}/>
               <Route path="/redirect/naver" element={<NaverRedirect/>}/>
               <Route path="/purchase-history" element={<PurchaseHistoryPage />} />
-              <Route path="/order-hotdeal/:id" element={<OrderHotdeal />} />
+              <Route path="/order-hotdeal/:hotdealId" element={<OrderHotdeal />} />
             </Routes>
             <Footer/>
           </div>
