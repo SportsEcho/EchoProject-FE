@@ -28,12 +28,13 @@ function OrderHotdeal() {
             }
 
             const purchaseData = {
+                hotdealId,
                 quantity,
                 address: `${address} ${detailAddress}`,
                 phone
             };
 
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/${hotdealId}/purchase`, purchaseData, {
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/hotdeals/purchase`, purchaseData, {
                 headers: { Authorization: `Bearer ${authToken}` }
             });
             alert('주문이 완료되었습니다.');
