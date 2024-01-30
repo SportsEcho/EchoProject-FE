@@ -69,7 +69,7 @@ function Login() {
                 {/*</div>*/}
                 {/* Kakao 로그인 링크 */}
                 <div className="mb-2">
-                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://sportsecho.life:3000/redirect/kakao&response_type=code`}>
+                  <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=https://sportsecho.life/redirect/kakao&response_type=code`}>
                     <img src={kakaoIcon} className="login-icon" alt="Kakao Login" />
                   </a>
                 </div>
