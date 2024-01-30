@@ -112,6 +112,7 @@ function GameChat(props) {
   const handleFormSubmit = (event) => {
     event.preventDefault(); // 페이지 새로고침 방지
 
+    //공백 입력 방지
     if($("#message").val() === "") {
       return;
     }
