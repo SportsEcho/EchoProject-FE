@@ -59,6 +59,7 @@ body {
   align-items: flex-end;
 
   padding-top: 14px;
+  padding-right: 20px;
 }
 #my_msg_body {
   margin-top: 5px;
@@ -73,6 +74,7 @@ body {
   align-items: flex-start;
 
   padding-top: 14px;
+  padding-left: 20px;
 }
 
 #your_msg_body {
