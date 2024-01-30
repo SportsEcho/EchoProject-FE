@@ -112,6 +112,11 @@ function GameChat(props) {
   const handleFormSubmit = (event) => {
     event.preventDefault(); // 페이지 새로고침 방지
 
+    //공백 입력 방지
+    if($("#message").val() === "") {
+      return;
+    }
+
     sendMessage(); // sendMessage 함수 호출
 
     $("#message").val(""); // 입력창 초기화
