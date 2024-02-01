@@ -57,11 +57,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-
-          script: |
-          # 실행중인 서버 다운
+          commands: |
             sudo docker-compose down
-          # 프론트 도커 이미지 삭제
             sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-          #  프론트 도커 이미지 pull 및 도커 컴포즈 실행
             sudo docker-compose up -d
